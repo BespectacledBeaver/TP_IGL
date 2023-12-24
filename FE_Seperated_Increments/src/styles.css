@@ -1,0 +1,509 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+
+    --ff-title: 'Poppins', 'Rubik', Verdana;
+    --ff-general: 'Figtree', 'Atkinson Hyperlegible', system-ui;
+
+    --fs-100: clamp(0.4375rem, 1.088vw + 0.22rem, 0.9rem);
+    --fs-200: clamp(0.5rem, 1.176vw + 0.265rem, 1rem);
+    --fs-300: clamp(0.5625rem, 1.324vw + 0.298rem, 1.125rem);
+    --fs-400: clamp(0.64rem, 1.435vw + 0.353rem, 1.25rem);
+    --fs-500: clamp(0.8rem, 1.941vw + 0.412rem, 1.625rem);
+    --fs-600: clamp(0.864rem, 2.085vw + 0.447rem, 1.75rem);
+
+    --fs-900: clamp(1.15rem, 2vw + 0.75rem, 2rem);
+
+    --fs-title: clamp(1.5rem, 7.5vw, 4.6875rem);
+    --fs-big-title: clamp(2rem, 10vw, 6.25rem);
+
+
+    --white-500: #F8F9FA;
+
+
+    --grey-25: #8B8E90;
+    --grey-50: #7D8184;
+    --grey-100: #717579;
+    --grey-200: #666A6F;
+    --grey-300: #5B6166;
+    --grey-400: #52585E;
+    --grey-500: #495057;
+    --grey-600: #43484D;
+    --grey-700: #3D4144;
+    --grey-800: #383A3D;
+    --grey-900: #333436;
+    --grey-1000: #2E2F31;
+    --grey-1100: #2A2B2B;
+
+    --primary-25: #EDF0F1;
+    --primary-50: #D4DDDF;
+    --primary-100: #BBCCD1;
+    --primary-200: #A2BFC6;
+    --primary-300: #88B4BF;
+    --primary-400: #6DADBC;
+    --primary-500: #4FA9BF;
+    --primary-600: #4C95A7;
+    --primary-700: #4D818E;
+    --primary-800: #4B717A;
+    --primary-900: #48636A;
+    --primary-1000: #44575C;
+    --primary-1100: #3F4D51;
+
+    --red-50: #fef2f2;
+    --red-100: #fee2e2;
+    --red-200: #fecaca;
+    --red-300: #fca5a5;
+    --red-400: #f87171;
+    --red-500: #ef4444;
+    --red-600: #dc2626;
+    --red-700: #b91c1c;
+    --red-800: #991b1b;
+    --red-900: #7f1d1d;
+    --red-950: #450a0a;
+}
+
+
+*,
+*:before,
+*:after {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+img {
+    display: block;
+}
+
+::selection {
+    background: var(--primary-200);
+    color: var(--white-500);
+}
+
+/*
+html {
+    overflow-y: hidden;
+}
+*/
+body {
+    background: #F1F3F5;
+    margin: 0;
+    overflow-y: hidden;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: var(--white-500);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    position: relative;
+    z-index: 1;
+}
+
+header>* {
+    margin-inline: var(--fs-900);
+}
+
+.logo {
+    height: 80px;
+    fill: #333;
+}
+
+.log-in__button {
+    font-family: var(--ff-title);
+    font-size: var(--fs-400);
+    font-weight: 600;
+    height: 40px;
+    align-self: center;
+    background-image: linear-gradient(135deg, var(--white-500) 50%, var(--primary-500) 50%);
+    background-size: 500%;
+    border: none;
+    color: var(--primary-500);
+    padding: 0.25em 1em;
+    border-radius: 100vw;
+    cursor: pointer;
+    outline: var(--primary-500) solid 5px;
+    outline-offset: -1px;
+    transition: color 700ms ease-in;
+    animation: bg-animation-out 700ms ease-in;
+}
+
+.log-in__button:hover,
+.log-in__button:focus-visible {
+    color: var(--white-500);
+    transition: color 550ms ease-out;
+    animation: bg-animation-in 550ms ease-out forwards;
+}
+
+@keyframes bg-animation-in {
+    0% {
+        background-position: left;
+    }
+
+    100% {
+        background-position: right;
+    }
+}
+
+@keyframes bg-animation-out {
+    0% {
+        background-position: right;
+    }
+
+    100% {
+        background-position: left;
+    }
+}
+
+.modal::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.modal {
+    min-width: 25vw;
+    max-width: 75vw;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 0 10px 4px #868E96;
+}
+
+.modal__inner {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__inner>p:first-of-type {
+    font-family: var(--ff-title);
+    font-size: calc(var(--fs-900) + 10px);
+    font-weight: 600;
+    color: var(--primary-500);
+    margin-top: 0;
+    margin-bottom: 2.25rem;
+}
+
+.modal__inner>p:nth-of-type(2) {
+    position: relative;
+    font-family: var(--ff-general);
+    font-size: var(--fs-400);
+    color: var(--grey-500);
+}
+
+.modal__inner>p:nth-of-type(2)::before,
+.modal__inner>p:nth-of-type(2)::after {
+    content: '';
+    position: absolute;
+    bottom: calc(50% - 0.25px);
+    height: 0.5px;
+    width: 100%;
+    background-color: var(--grey-500);
+
+}
+
+.modal__inner>p:nth-of-type(2)::before {
+    left: -100%;
+}
+
+.modal__inner>p:nth-of-type(2)::after {
+    right: -100%;
+}
+
+.modal__inner button {
+    font-size: var(--fs-500);
+    height: auto;
+}
+
+.modal__inner>forum {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__inner>forum button {
+    margin-top: 1.25rem;
+}
+
+.modal__inner>button {
+    margin-block: 0.4rem;
+}
+
+input,
+select,
+textarea {
+    margin: 0;
+    font-size: 100%;
+    vertical-align: middle;
+}
+
+
+.password-input {
+    position: relative;
+    z-index: 2;
+}
+
+/*
+.password-input>span {
+    position: absolute;
+    right: 2px;
+    transform: translateY(2px);
+    height: calc(100% - 14px);
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    width: 25%;
+    background: var(--slate-200);
+    justify-content: center;
+    align-items: center;
+}
+
+.password-input svg{
+    height: 65%;
+    margin:  7.53px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    fill: var(--primary-500);
+}
+*/
+input[type="text"],
+input[type="password"] {
+    outline: none;
+    box-sizing: border-box;
+    font-size: var(--fs-400);
+    font-family: var(--ff-general);
+    font-weight: 600;
+
+    min-width: 250px;
+    max-width: 80vw;
+    margin-bottom: 1rem;
+    padding: 12px 5px;
+    border: 2px solid #868E96;
+    border-radius: 15px;
+    color: #868E96 !important;
+    background-color: rgb(217, 217, 217, 0.5) !important;
+    transition: all 250ms ease-in;
+}
+
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border: 2px solid var(--primary-500);
+    color: var(--primary-500);
+}
+
+input[type="password"]:invalid {
+    outline: none;
+    border: 2px solid var(--red-600);
+}
+
+/*
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    inset: 0;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    pointer-events: none;
+    z-index: 1000;
+}
+*/
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    isolation: isolate;
+}
+
+.main>p {
+    font-family: var(--ff-title);
+    font-size: var(--fs-title);
+    font-weight: 400;
+    text-transform: capitalize;
+    color: var(--grey-500);
+    margin-bottom: var(--fs-200);
+}
+
+.main>p>span {
+    font-weight: 600;
+    color: var(--primary-500);
+    mix-blend-mode: screen;
+}
+
+.main>.big-title {
+    font-size: var(--fs-big-title);
+    font-weight: 600;
+    color: var(--primary-500);
+    margin-top: 0;
+    mix-blend-mode: screen;
+}
+
+.wave-scroller {
+    position: absolute;
+    bottom: -25vh;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.wave-scroller__inner {
+    width: fit-content;
+    display: flex;
+
+    animation: scroll 35s linear infinite;
+}
+
+.wave {
+    width: 100vw;
+}
+
+@keyframes scroll {
+    to {
+        transform: translate(-50%);
+    }
+
+}
+
+.new-item-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.btn {
+    background: hsl(200, 100%, 50%, 0.1);
+    border: 1px solid hsl(200, 100%, 50%);
+    color: hsl(200, 100%, 50%);
+    padding: 0.25em 0.5em;
+    border-radius: 0.25em;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn:hover,
+.btn:focus-visible {
+    background: hsl(200, 100%, 50%, 0.2);
+}
+
+.btn.btn-danger {
+    background: hsl(0, 100%, 40%, 0.1);
+    border: 1px solid hsl(0, 100%, 40%);
+    color: hsl(0, 100%, 40%);
+}
+
+.btn.btn-danger:hover,
+.btn.btn-danger:focus-visible {
+    background: hsl(0, 100%, 40%, 0.2);
+}
+
+.new-item-form input {
+    outline: none;
+    border: 1px solid hsl(200, 100%, 40%);
+    background: hsl(200, 100%, 30%);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    color: hsl(200, 100%, 90%);
+}
+
+.new-item-form input:focus {
+    border: 1px solid hsl(200, 100%, 70%);
+}
+
+.header {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    margin-left: 1rem;
+    list-style: none;
+}
+
+.list li:has(input:checked) label {
+    color: hsl(200, 20%, 40%);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.list li {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.list li label {
+    display: flex;
+    gap: 0.25rem;
+    cursor: pointer;
+    align-items: center;
+}
+
+.list li:has(input:focus-visible) label {
+    outline: 1px solid hsl(200, 100%, 50%);
+}
+
+.list li input {
+    outline: none;
+    width: 0;
+    height: 0;
+    appearance: none;
+    pointer-events: none;
+    position: absolute;
+}
+
+.list li label::before {
+    content: "";
+    display: block;
+    width: 0.9rem;
+    height: 0.9rem;
+    background: hsl(200, 100%, 90%);
+    border-radius: 0.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list li label:hover::before {
+    background: hsl(200, 100%, 80%);
+}
+
+.list li:has(input:checked) label::before {
+    content: "✔";
+    background: hsl(200, 100%, 40%);
+    color: hsl(200, 100%, 90%);
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.list li:has(input:checked) label:hover::before {
+    background: hsl(200, 100%, 30%);
+}
