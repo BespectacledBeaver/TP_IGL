@@ -10,6 +10,7 @@ export function LogInButton({ openModal }) {
 export function LogInForum({ openModal, closeModal }) {
   const ref = useRef();
   const [bool, signUp] = useState(false);
+  const [modalHeading, toggleHeading] = useState("Log-in");
 
   useEffect(() => {
     if (openModal) {
@@ -19,68 +20,40 @@ export function LogInForum({ openModal, closeModal }) {
     }
   }, [openModal]);
 
-  const ignoreClick = (event) => { 
+  const ignoreClick = (event) => {
     event.stopPropagation();
   }
 
   function logIn() {
 
-    if (!bool) {
-      return <>
-        <p>Log-in</p>
-        <forum method="post">
-          <input type="text" id="email" name="email" placeholder="email" />
-          <div className="password-input">
-            <input type="password" id="password" name="password" aria-label="password" placeholder="Password" />
-          </div>
-
-          <button className="log-in__button">
-            Log-in
-          </button>
-        </forum>
-        <p>Don't have an account?</p>
-        <button className="log-in__button" onClick={() => signUp(true)}>
-          Sign-up
-        </button>
-      </>
-    }
-
     return <>
-      <p>Sign-up</p>
+      <p>{modalHeading}</p>
       <forum method="post">
-        <input type="text" id="email" name="email" placeholder="email" />
+        <input type="text" id="email" name="email" placeholder="e-mail" />
         <div className="password-input">
-          <input type="password" id="password" name="password" aria-label="password" placeholder="Password" />
+          <input type="password" id="password" name="password" aria-label="password" placeholder="password" />
         </div>
-        <div className="password-input">
-          <input type="password" id="password" name="password" aria-label="password" placeholder="Password Confirmation" />
-        </div>
+        {(bool && <div className="password-input">
+          <input type="password" id="password" name="password" aria-label="password" placeholder="confirm password" />
+        </div>)}
         <button className="log-in__button">
-          Sign-up
+          {modalHeading}
         </button>
       </forum>
+      {(!bool && <><p>Don't have an account?</p>
+        <button className="log-in__button" onClick={() => {signUp(true); toggleHeading("Sign-up")}}>
+          Sign-up
+        </button>
+        </>)}
     </>
-
   }
 
 
   return (
-    <dialog className="modal" ref={ref} onCancel={closeModal} onClick={closeModal}>
+    <dialog className="modal" ref={ref} onCancel={closeModal} onClick={()=> {closeModal(); signUp(false); toggleHeading('Log-in');}}>
       <div className="modal__inner" onClick={(event) => ignoreClick(event)}>
         {logIn()}
       </div>
     </dialog>
   );
 }
-
-{/*export function LogInButton() {
-    return <button className="log-in__button">
-        Log-in
-      </button>
-}
-
-export function LogInForum(){
-  return <dialog>
-
-  </dialog>
-}*/}
