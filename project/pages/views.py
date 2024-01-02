@@ -1,78 +1,60 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-
-
-# Create your views here.
-def home(request):
-    return render(request, "index.html")
-
-def signup(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        email = request.POST['email']
-        pass1 = request.POST['pass1']
-        pass2 = request.POST['pass2']
-        
-        if User.objects.filter(username=username):
-            messages.error(request, "Username already exist! Please try some other username.")
-            return redirect('home')
-        
-        if User.objects.filter(email=email).exists():
-            messages.error(request, "Email Already Registered!!")
-            return redirect('home')
-        
-        if len(username)>20:
-            messages.error(request, "Username must be under 20 charcters!!")
-            return redirect('home')
-        
-        if pass1 != pass2:
-            messages.error(request, "Passwords didn't matched!!")
-            return redirect('home')
-        
-        if not username.isalnum():
-            messages.error(request, "Username must be Alpha-Numeric!!")
-            return redirect('home')
-        
-        myuser = User.objects.create_user(username, email, pass1)
-        myuser.first_name = fname
-        myuser.last_name = lname
-        # myuser.is_active = False
-        myuser.is_active = False
-        myuser.save()
-        messages.success(request, "Your Account has been created succesfully!!")
-        
-        return redirect('signin')
-        
-        
-    return render(request, "signup.html")
+from django.shortcuts import render
+from rest_framework.views import APIView 
+from userManagementApp.serializers import UserSerializer 
+from rest_framework.response import Response 
+from rest_framework import status
+from userManagementApp.models import User 
+import jwt , datetime  
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
+from django.urls import reverse_lazy
+from rest_framework.decorators import api_view
 
 
 
-def signin(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        pass1 = request.POST['pass1']
-        
-        user = authenticate(username=username, password=pass1)
-        
-        if user is not None:
-            login(request, user)
-            fname = user.first_name
-            # messages.success(request, "Logged In Sucessfully!!")
-            return render(request, "index.html",{"fname":fname})
-        else:
-            messages.error(request, "Bad Credentials!!")
-            return redirect('home')
+class Signupview(APIView):
+    def post(self , request): 
     
-    return render(request, "signin.html")
+        username = request.data.get("username")
+        if username is not None:
+            user = User.objects.filter(name=username).first()
+
+            if user is None:
+                serializer = UserSerializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response({"error": "User with this username already exists."}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({"error": "Please provide a 'username' in the request data."}, status=status.HTTP_400_BAD_REQUEST)
 
 
-def signout(request):
-    logout(request)
-    messages.success(request, "Logged Out Successfully!!")
-    return redirect('home')
+class Loginview(APIView):
+    def post(self , request):
+        name = request.data["name"]
+        password = request.data["password"]
+        user = User.objects.filter(name=name).first()
+        
+        visitor = "Not Found"
+        if user is not None:
+            if  user.password == password :
+                visitor = "user"
+       
+        payload = {
+            "id" : user.id , 
+            "exp" : datetime.datetime.utcnow() + datetime.timedelta(minutes=10) ,
+            "iat" : datetime.datetime.utcnow()
+        }
+        token = jwt.encode(payload,'secret', algorithm="HS256")
+        reponse = Response() 
+        reponse.data = {
+            "token" : token , 
+             "visitor" : visitor 
+        }
+        reponse.set_cookie("SESSION",value=token) 
+        return reponse 
+    
+
+
+    
