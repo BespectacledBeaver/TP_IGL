@@ -1,3 +1,16 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
 #root {
     --gradient-threshold: 15%;
     background: linear-gradient(#F1F3F5 var(--gradient-threshold), var(--primary-500));
@@ -217,7 +230,7 @@ input[type="text"]:focus-visible {
 .articles-list {
     min-width: 90vw;
     background-color: var(--white-500);
-    border-radius: calc(var(--fs-900) + 10px);
+    border-radius: var(--fs-300);
     outline: #B5C9CF solid 2px;
     overflow: hidden;
 }
@@ -232,7 +245,7 @@ input[type="text"]:focus-visible {
     gap: 5px;
 }
 
-.article:has(>.article-info:hover ) {
+.article:has(>.article-info:hover) {
     background-color: var(--primary-50);
     border-bottom: 3px solid var(--primary-500);
 
@@ -372,19 +385,125 @@ input[type="text"]:focus-visible {
 
 }
 
-.to-bookmark, .bookmarked {
+.to-bookmark,
+.bookmarked {
     fill: var(--primary-500);
-    
+
     transition: all 1000ms ease-out;
 }
 
-.bookmark-input:checked ~ .bookmark__container .to-bookmark ,
-.bookmark-input:not(:checked) ~ .bookmark__container .bookmarked {
+.bookmark-input:checked~.bookmark__container .to-bookmark,
+.bookmark-input:not(:checked)~.bookmark__container .bookmarked {
     fill-opacity: 0;
 }
 
-.bookmark:hover .to-bookmark, .bookmark:hover .bookmarked {
+.bookmark:hover .to-bookmark,
+.bookmark:hover .bookmarked {
     fill: var(--primary-700);
-    
+
     transition: all 200ms ease-in;
+}
+
+.articles-list-nav {
+    margin-block: 1.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.articles-list-nav button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    height: calc(var(--fs-900) + 15px);
+    aspect-ratio: 1;
+    border-radius: 5px;
+    margin-inline: 0.5rem;
+
+    font-family: var(--ff-title);
+    color: var(--white-500);
+    fill: var(--white-500);
+    font-size: var(--fs-400);
+    font-weight: 500;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: background-color 750ms ease-out, fill 750ms ease-out, background-position 1s ease-out;
+}
+
+.articles-list-nav button:first-child,
+.articles-list-nav button:last-child {
+    margin-inline: 1rem;
+}
+
+.articles-list-nav input[type="text"] {
+    height: calc(var(--fs-900) + 15px);
+    aspect-ratio: 1;
+    border-radius: 5px;
+    margin-inline: 0.5rem;
+
+    font-family: var(--ff-title);
+    font-size: var(--fs-400);
+    font-weight: 500;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background-color: var(--white-500);
+    color: var(--primary-500);
+}
+
+.articles-list-nav button:nth-child(2) {
+    margin-inline: 0;
+}
+
+
+.page-count-indicator {
+    background-image: linear-gradient(-45deg, transparent 0 35%, rgba(248, 249, 250, 0.25), transparent 65%);
+    background-size: 500%;
+    background-position: left;
+    user-select: all;
+    transition: background-position 1s ease-out;
+}
+
+.page-count-indicator:hover {
+    background-position: right;
+    transition: background-position 600ms ease-in;
+}
+
+.back,
+.next {
+    aspect-ratio: 1;
+    height: var(--fs-900);
+}
+
+.opaque {
+    fill-opacity: 0.25;
+}
+
+.clickable:hover {
+    background-color: var(--white-500);
+    fill: var(--primary-500);
+    transition: background-color 450ms ease-in, fill 450ms ease-in;
+}
+
+/* FAVORITES PAGE */
+
+.title {
+    font-family: var(--ff-title);
+    font-size: clamp(51px, 16.029vw - 0.018rem, 10rem);
+    font-weight: 600;
+
+    margin-block: 1rem;
+
+    color: transparent;
+    background-image: linear-gradient(180deg, transparent 20%, var(--primary-500) 62.5%);
+    background-clip: text;
 }
