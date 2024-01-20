@@ -1,0 +1,237 @@
+.main {
+    position: relative;
+    display: grid;
+    background-color: #F1F3F5;
+    transition: grid-template-columns 1500ms ease-in-out;
+}
+
+.mod-tab__input:nth-of-type(1):checked~.main {
+    grid-template-columns: 1fr 0fr;
+}
+
+.mod-tab__input:nth-of-type(2):checked~.main {
+    grid-template-columns: 0fr 1fr;
+}
+
+.mod-tab__input {
+    display: none;
+}
+
+.articles-list-tab,
+.article-tab {
+    --_gradient-angle: 90deg;
+
+    width: 100%;
+    position: relative;
+    background-color: var(--primary-500);
+    background-image: linear-gradient(var(--_gradient-angle), #F1F3F5 0% calc(100% - 4px), transparent 4px 100%);
+    min-height: 100dvh;
+    overflow: hidden;
+
+    transition: all 500ms ease-out;
+}
+
+.article-tab {
+    --_gradient-angle: 270deg;
+}
+
+.articles-list-tab:has(.text-tab-label:hover),
+.article-tab:has(.list-tab-label:hover) {
+    background-color: var(--white-500);
+
+    transition: all 200ms ease-in;
+}
+
+.articles-list-tab>div {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+
+    margin: 2rem calc(var(--fs-900) + 1rem);
+}
+
+.text-tab-label,
+.list-tab-label {
+    position: absolute;
+    display: grid;
+    top: calc(1rem + (-1*var(--fs-900) + 40px)/2);
+    height: var(--fs-900);
+    aspect-ratio: 1.2/1;
+    background-color: var(--primary-500);
+    fill: var(--white-500);
+    transition: all 500ms ease-out;
+    z-index: 100;
+}
+
+.text-tab-label {
+    right: 0;
+    border-top-left-radius: 10px 25px;
+    border-bottom-left-radius: 10px 25px;
+    place-items: center start;
+
+    translate: 10%;
+}
+
+.list-tab-label {
+    left: 0;
+    border-top-right-radius: 100vw;
+    border-bottom-right-radius: 100vw;
+    place-items: center end;
+
+    translate: -10%;
+}
+
+.text-tab-label:hover,
+.list-tab-label:hover {
+    background-color: var(--white-500);
+    fill: var(--primary-500);
+    translate: 0;
+    transition: all 200ms ease-in;
+}
+
+.text-tab-label>svg,
+.list-tab-label>svg {
+    height: var(--fs-300);
+    aspect-ratio: 1;
+    margin-inline: 5px;
+}
+
+.mod-tab__input:nth-of-type(2):checked~.main .articles-list-tab,
+.mod-tab__input:nth-of-type(1):checked~.main .article-tab,
+.mod-tab__input:nth-of-type(2):checked~.main .text-tab-label,
+.mod-tab__input:nth-of-type(1):checked~.main .list-tab-label {
+    background-color: var(--white-500);
+    fill: var(--primary-500);
+}
+
+.article {
+    display: flex;
+    align-items: center;
+    background-color: var(--white-500);
+    border-radius: 25px;
+    border: 3px solid #B5C9CF;
+    min-height: 75px;
+
+    color: var(--grey-500);
+    font-size: var(--fs-400);
+    font-weight: 500;
+    text-transform: capitalize;
+
+    transition: all 500ms ease-out;
+}
+
+.article:hover {
+    color: var(--primary-700);
+    background-color: var(--primary-50);
+    border: 3px solid var(--primary-500);
+    transition: all 200ms ease-in;
+}
+
+.article>p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    margin-inline: 1rem 0.5rem;
+
+    cursor: pointer;
+}
+
+.article-tab>div {
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.article-tab-header {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+
+    background-image: linear-gradient(270deg, var(--white-500) 0% calc(100% - 4px), transparent 4px 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.article-button {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    border: unset;
+    outline: unset;
+    font-family: var(--ff-title);
+    font-size: var(--fs-400);
+    font-weight: 600;
+    height: 40px;
+    align-self: center;
+    color: var(--white-500);
+    fill: var(--white-500);
+    padding: 0.25em 1em;
+    margin: 1rem 2rem;
+    border-radius: 100vw;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all 500ms ease-out;
+}
+
+.article-button:hover {
+    transition: all 250ms ease-in;
+}
+
+.delete {
+    background-color: var(--red-500);
+}
+
+.delete:hover {
+    color: var(--red-200);
+    background-color: var(--red-700);
+    fill: var(--red-200);
+}
+
+.save {
+    background-color: var(--green-500);
+}
+
+.save:hover {
+    color: var(--green-200);
+    background-color: var(--green-700);
+    fill: var(--green-200);
+}
+
+.article-button>svg {
+    height: var(--fs-900);
+}
+
+.article-modification {
+    display: flex;
+    justify-content: center;
+    margin-top: calc(40px + 2rem + 2rem);
+}
+
+.textarea {
+    background-color: #fff;
+    resize: none;
+    font-family: var(--ff-general);
+    font-size: 100%;
+    font: 1.4em/1.5em var(--ff-general);
+    border: none;
+    outline: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 0 10px;
+    margin: 0;
+    width: calc(100% - 4rem);
+    min-height: 500px;
+    max-height: 200dvh;
+    overflow: auto;
+}
+
+.textarea:focus {
+    outline: 2px solid var(--primary-500);
+}
+
+.textarea::selection {
+    background: #2a6ccc;
+    color: #fff;
+}

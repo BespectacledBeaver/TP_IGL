@@ -1,0 +1,72 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+}
+
+.frame {
+    position: relative;
+    border-radius: 10px;
+    padding-bottom: 35px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: var(--white-500);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.frame::before,.frame::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -5px;
+    background-color:var(--primary-500);
+    border-radius: inherit;
+}
+
+.frame::after{
+    filter: blur(1rem);
+}
+
+forum>p:first-of-type {
+    font-family: var(--ff-title);
+    font-size: calc(var(--fs-900) + 10px);
+    font-weight: 600;
+    color: var(--primary-500);
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+input[type="text"],
+input[type="password"] {
+    min-width: 200px;
+    max-width: 80vw;
+}
+
+.wave-scroller {
+    mix-blend-mode: screen;
+}
+
+
+@media screen and (orientation: portrait){
+    body {
+        background-color: none;
+    }
+
+    .main {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .wave-scroller {
+        height: 100dvh;
+        bottom: -30vh;
+        background: linear-gradient(transparent calc((200vw*625.03278)/2886), var(--primary-500) calc((200vw*625.03278)/2886));
+    }
+
+}

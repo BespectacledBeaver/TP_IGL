@@ -6,11 +6,16 @@ import "../styles.css";
 
 export default function App() {
     const [articles, setBookmark] = useState([]);
+    const [currentNavPage, setCurrentNavPage] = useState(1);
+
+    const goBack = () => {setCurrentNavPage(currentNavPage - 1)};
+    const goForward = () => {setCurrentNavPage(currentNavPage + 1)};
 
     return <>
         <Header />
         <div className="main">
             <forum>
+            <input type="radio" name="criteria" id="title" className="criterion-input" aria-hidden="true" />
                 <input type="radio" name="criteria" id="key-words" className="criterion-input" aria-hidden="true" />
                 <input type="radio" name="criteria" id="authors" className="criterion-input" aria-hidden="true" />
                 <input type="radio" name="criteria" id="institutions" className="criterion-input" aria-hidden="true" />
@@ -27,17 +32,20 @@ export default function App() {
                     </label>
                 </div>
 
+                <label htmlFor="title" className="criterion-label"> title </label>
                 <label htmlFor="key-words" className="criterion-label"> key words </label>
                 <label htmlFor="authors" className="criterion-label"> authors </label>
                 <label htmlFor="institutions" className="criterion-label"> institutions </label>
 
-                <div className="date__container">
-                    <p>From</p>
-                    <input type="date" name="" id="start" value="" />
-                </div>
-                <div className="date__container">
-                    <p>To</p>
-                    <input type="date" name="" id="end" value="" />
+                <div className="test">
+                    <div className="date__container">
+                        <p>From</p>
+                        <input type="date" name="" id="start" value="" />
+                    </div>
+                    <div className="date__container">
+                        <p>To</p>
+                        <input type="date" name="" id="end" value="" />
+                    </div>
                 </div>
             </forum>
             <div className="articles-list">
@@ -205,7 +213,7 @@ export default function App() {
                     </label>
                 </div>
             </div>
-            <Navigation currentNavPage={1} maxNavPages={100}/>
+            <Navigation currentNavPage={currentNavPage} maxNavPages={5} goback={goBack} goforward={goForward}/>
         </div>
         <Footer />
     </>

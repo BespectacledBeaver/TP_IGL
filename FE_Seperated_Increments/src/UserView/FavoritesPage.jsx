@@ -6,6 +6,10 @@ import "../styles.css";
 
 export default function App() {
     const [modal, setModal] = useState(false);
+    const [currentNavPage, setCurrentNavPage] = useState(1);
+
+    const goBack = () => {setCurrentNavPage(currentNavPage - 1)};
+    const goForward = () => {setCurrentNavPage(currentNavPage + 1)};
 
     return <>
         <Header />
@@ -176,7 +180,7 @@ export default function App() {
                     </label>
                 </div>
             </div>
-            <Navigation currentNavPage={2} maxNavPages={5}/>
+            <Navigation currentNavPage={currentNavPage} maxNavPages={5} goback={goBack} goforward={goForward}/>
         </div>
         <Footer />
     </>
