@@ -47,7 +47,13 @@ input[type="password"] {
     min-width: 200px;
     max-width: 80vw;
 }
-
+/*
+.log-in__button {
+    background-image: linear-gradient(135deg, var(--white-500) 50%, #86e2ef 50%);
+    color: #86e2ef;
+    outline: #86e2ef solid 5px;
+}
+*/
 .wave-scroller {
     mix-blend-mode: screen;
 }

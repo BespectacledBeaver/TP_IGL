@@ -84,13 +84,13 @@ export default function App() {
                     </div>
                     <div className="article-modification">
                         <div className="textarea" role="textbox" aria-multiline="true" contentEditable="true" >
-                            <p className="article-title">A pilot study using a machine-learning approach of morphological and hemodynamic parameters for predicting aneurysms enhancement</p>
-                            <p className="bold centered">Nan Lv1 · Christof Karmonik2 · Zhaoyue Shi2 · Shiyue Chen3 · Xinrui Wang3 · Jianmin Liu1 · Qinghai Huang1</p>
-                            <p className="article-paragraph">Received: 16 December 2019 / Accepted: 18 May 2020
+                            #&lt;p className="article-title"#&gt;<br></br>A pilot study using a machine-learning approach of morphological and hemodynamic parameters for predicting aneurysms enhancement#&lt;/p#&gt;<br></br>
+                            #&lt;p className="bold centered"#&gt;<br></br>Nan Lv1 · Christof Karmonik2 · Zhaoyue Shi2 · Shiyue Chen3 · Xinrui Wang3 · Jianmin Liu1 · Qinghai Huang1#&lt;/p#&gt;<br></br>
+                            #&lt;p className="article-paragraph"#&gt;<br></br>Received: 16 December 2019 / Accepted: 18 May 2020
                                 © CARS 2020
-                            </p>
-                            <p className="article-heading">Abstract</p>
-                            <p className="article-paragraph">
+                            #&lt;/p#&gt;<br></br>
+                            #&lt;p className="article-heading"#&gt;<br></br>Abstract#&lt;/p#&gt;<br></br>
+                            #&lt;p className="article-paragraph"#&gt;<br></br>
                                 Purpose The development of straightforward classification methods is needed to identify unstable aneurysms and rupture
                                 risk for clinical use. In this study, we aim to investigate the relative importance of geometrical, hemodynamic and clinical risk
                                 factors represented by the PHASES score for predicting aneurysm wall enhancement using several machine-learning (ML)
@@ -106,7 +106,7 @@ export default function App() {
                                 significant higher accuracy (0.79) than the NIR (0.58): random forests, generalized linear modeling, gradient boosting and
                                 linear discriminant analysis.
                                 Conclusions ML models are capable of predicting the relative importance of geometrical, hemodynamic and clinical parameters for aneurysm wall enhancement. Size ratio, PHASES score and mean wall shear stress value at the aneurysm wall are
-                                of highest importance when predicting wall enhancement in cerebral aneurysms</p>
+                                of highest importance when predicting wall enhancement in cerebral aneurysms#&lt;/p#&gt;<br></br>
                         </div>
                     </div>
                 </forum>

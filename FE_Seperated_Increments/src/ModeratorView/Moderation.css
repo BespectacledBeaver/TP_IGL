@@ -23,7 +23,7 @@
 
     width: 100%;
     position: relative;
-    background-color: var(--primary-500);
+    background-color: #B5C9CF;
     background-image: linear-gradient(var(--_gradient-angle), #F1F3F5 0% calc(100% - 4px), transparent 4px 100%);
     min-height: 100dvh;
     overflow: hidden;
@@ -37,7 +37,7 @@
 
 .articles-list-tab:has(.text-tab-label:hover),
 .article-tab:has(.list-tab-label:hover) {
-    background-color: var(--white-500);
+    background-color: var(--primary-500);
 
     transition: all 200ms ease-in;
 }
@@ -57,7 +57,7 @@
     top: calc(1rem + (-1*var(--fs-900) + 40px)/2);
     height: var(--fs-900);
     aspect-ratio: 1.2/1;
-    background-color: var(--primary-500);
+    background-color: #B5C9CF;
     fill: var(--white-500);
     transition: all 500ms ease-out;
     z-index: 100;
@@ -83,8 +83,7 @@
 
 .text-tab-label:hover,
 .list-tab-label:hover {
-    background-color: var(--white-500);
-    fill: var(--primary-500);
+    background-color: var(--primary-500);
     translate: 0;
     transition: all 200ms ease-in;
 }
@@ -100,8 +99,8 @@
 .mod-tab__input:nth-of-type(1):checked~.main .article-tab,
 .mod-tab__input:nth-of-type(2):checked~.main .text-tab-label,
 .mod-tab__input:nth-of-type(1):checked~.main .list-tab-label {
-    background-color: var(--white-500);
-    fill: var(--primary-500);
+    background-color: #B5C9CF;
+    fill: var(--white-500);
 }
 
 .article {
