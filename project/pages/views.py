@@ -16,19 +16,36 @@ class Signupview(APIView):
     def post(self , request): 
     
         username = request.data.get("username")
+        
         if username is not None:
             user = User.objects.filter(username=username).first()
 
             if user is None:
+
                 serializer = UserSerializer(data=request.data)
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return Response({"error": "User with this username already exists."}, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response({"error": "Please provide a 'username' in the request data."}, status=status.HTTP_400_BAD_REQUEST)
 
+                data_to_frontend = {
+                "username": username,
+                "is_authenticated": True
+                }
+
+                response = Response(data_to_frontend)
+                return response
+            else:
+                data_to_frontend = {
+                "is_authenticated": False
+                }
+                response = Response(data_to_frontend)
+                return response
+        else:
+            data_to_frontend = {
+            "is_authenticated": False
+            }
+
+            response = Response(data_to_frontend)
+            return response
 
 class Loginview(APIView):
     def post(self , request):
