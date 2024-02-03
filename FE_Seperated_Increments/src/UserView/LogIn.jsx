@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import ArticlesPage from './ArticlesPage';
 
 export function LogInButton({ openModal }) {
 
@@ -14,6 +16,8 @@ export function LogInForum({ openModal, closeModal }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  let navigate = useNavigate();
+
   const handleSignup = () => {
     fetch('http://127.0.0.1:8000/', {
       method: 'POST',
@@ -27,8 +31,9 @@ export function LogInForum({ openModal, closeModal }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the retrieved data, e.g., update state with the signup response
-        console.log(data);
+        if(response.ok){
+          navigate(data.username);
+        }
       })
       .catch((error) => {
         // Handle errors
@@ -50,8 +55,7 @@ export function LogInForum({ openModal, closeModal }) {
       .then(response => response.json())
       .then(data => {
         if (data.is_authenticated) {
-          console.log('Login successful! Username:', data.username);
-          // Handle successful login, e.g., redirect to another page
+          navigate(data.username);
         } else {
           console.log('Login failed!');
           // Handle failed login, e.g., display error message
@@ -84,9 +88,15 @@ export function LogInForum({ openModal, closeModal }) {
         {(bool && <div className="password-input">
           <input type="password" id="password-conf" name="password-conf" aria-label="password-conf" placeholder="confirm password" />
         </div>)}
-        <button type='submit' className="log-in__button" onClick={handleLogin}>
-          {modalHeading}
-        </button>
+        {(!bool && <button type='submit' className="log-in__button" onClick={handleLogin}>
+          Log-in
+        </button>)}
+        {(bool && <button type='submit' className="log-in__button" onClick={handleSignup}>
+          Sign-up
+        </button>)}
+        <Routes>
+          <Route exact path="/:id" component={ArticlesPage} />
+        </Routes>
       </forum>
       {(!bool && <><p>Don't have an account?</p>
         <button type='submit' className="log-in__button" onClick={() => { signUp(true); toggleHeading("Sign-up"); }}>

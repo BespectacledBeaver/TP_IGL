@@ -156,6 +156,7 @@ footer {
     font-size: var(--fs-300);
     font-weight: 500;
     color: var(--white-500);
+    margin-top: 1rem;
 }
 
 footer>p {

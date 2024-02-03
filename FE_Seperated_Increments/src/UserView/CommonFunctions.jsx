@@ -1,12 +1,19 @@
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import siteLogo from '../assets/scientifically.svg';
+import ArticlesPage from './ArticlesPage';
+import FavoritesPage from './FavoritesPage';
 
 export function Header() {
     return <header>
-        <a href="">
-            <img className="logo" src={siteLogo} alt="" />
+        <a onClick={useNavigate('/user')}>
+            <img className="logo" src={siteLogo} alt="" onClick={useNavigate('/user')}/>
         </a>
-        <a className="profile" href="">
+        <a className="profile" onClick={useNavigate('/user/favorites')}>
         </a>
+        <Routes>
+          <Route exact path="user"/>
+          <Route exact path="user/favorites" />
+        </Routes>
     </header>
 }
 

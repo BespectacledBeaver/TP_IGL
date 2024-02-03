@@ -4,7 +4,7 @@ import { Article } from './Article';
 import "./Articles.css";
 import "../styles.css";
 
-export default function App() {
+export default function Favorites() {
     const [modal, setModal] = useState(false);
     const [currentNavPage, setCurrentNavPage] = useState(1);
 
@@ -180,7 +180,7 @@ export default function App() {
                     </label>
                 </div>
             </div>
-            <Navigation currentNavPage={currentNavPage} maxNavPages={5} goback={goBack} goforward={goForward}/>
+            {/*<Navigation currentNavPage={currentNavPage} maxNavPages={5} goback={goBack} goforward={goForward}/>*/}
         </div>
         <Footer />
     </>

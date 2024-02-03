@@ -1,4 +1,4 @@
-#root {
+#root:has(.article) {
     --gradient-threshold: 15%;
     background: linear-gradient(#F1F3F5 var(--gradient-threshold), var(--primary-500));
 
@@ -14,7 +14,7 @@
     background-color: var(--primary-500);
 }
 
-.main {
+.main:has(.article) {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -55,7 +55,10 @@
     transition: background-image 550ms ease-out;
 }
 
-input[type="text"] {
+.search-bar > input[type="text"] {
+    outline: none;
+    box-sizing: border-box;
+    font-weight: 500;
     flex: 1;
     padding: 0;
     margin-left: calc((var(--fs-900) + 25px)/2);
@@ -66,7 +69,7 @@ input[type="text"] {
     border: none;
 }
 
-input[type="text"]:focus-visible {
+.search-bar > input[type="text"]:focus-visible {
     background-color: transparent;
     outline: none;
 }
@@ -505,13 +508,13 @@ input[type="text"]:focus-visible {
 /* FAVORITES PAGE */
 
 .title {
-    font-family: var(--ff-title);
-    font-size: clamp(51px, 16.029vw - 0.018rem, 10rem);
-    font-weight: 600;
+    font-family: var(--ff-title) !important;
+    font-size: clamp(51px, 16.029vw - 0.018rem, 10rem) !important;
+    font-weight: 600 !important;
 
-    margin-block: 1rem;
+    margin-block: 1rem !important;
 
-    color: transparent;
-    background-image: linear-gradient(180deg, transparent 20%, var(--primary-500) 62.5%);
-    background-clip: text;
+    color: transparent !important;
+    background-image: linear-gradient(180deg, transparent 20%, var(--primary-500) 62.5%) !important;
+    background-clip: text !important;
 }

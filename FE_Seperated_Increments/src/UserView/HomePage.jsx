@@ -4,7 +4,7 @@ import { LogInButton, LogInForum } from './LogIn';
 import "../styles.css";
 import "../Home.css";
 
-export default function App() {
+export default function Home() {
   const [modal, setModal] = useState(false);
 
   return <>
