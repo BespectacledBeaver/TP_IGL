@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'pages.apps.PagesConfig',
     'searchApp',
     'articleManagementAPP',
@@ -51,9 +51,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    
     'corsheaders.middleware.CorsMiddleware',
-    
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -91,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project',
         'USER':'postgres',
-        'PASSWORD':'12311231',
+        'PASSWORD':'tpigl6mhdi',
         'HOST':'localhost',
         'PORT':'5432',
     }
@@ -139,4 +138,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 CORS_ALLOW_ALL_ORIGINS: True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',
+]
