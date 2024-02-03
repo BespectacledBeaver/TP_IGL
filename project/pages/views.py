@@ -11,13 +11,13 @@ from django.urls import reverse_lazy
 from rest_framework.decorators import api_view
 
 
-
+#@api_view(['POST'])
 class Signupview(APIView):
     def post(self , request): 
     
         username = request.data.get("username")
         if username is not None:
-            user = User.objects.filter(name=username).first()
+            user = User.objects.filter(username=username).first()
 
             if user is None:
                 serializer = UserSerializer(data=request.data)
@@ -32,28 +32,44 @@ class Signupview(APIView):
 
 class Loginview(APIView):
     def post(self , request):
-        name = request.data["name"]
-        password = request.data["password"]
-        user = User.objects.filter(name=name).first()
+        username = request.data.get("username")
+        password = request.data.get("password")
+        user = User.objects.filter(username=username).first()
         
         visitor = "Not Found"
+        is_authenticated = False 
         if user is not None:
             if  user.password == password :
                 visitor = "user"
+                is_authenticated = True
        
-        payload = {
-            "id" : user.id , 
-            "exp" : datetime.datetime.utcnow() + datetime.timedelta(minutes=10) ,
-            "iat" : datetime.datetime.utcnow()
-        }
-        token = jwt.encode(payload,'secret', algorithm="HS256")
-        reponse = Response() 
-        reponse.data = {
-            "token" : token , 
-             "visitor" : visitor 
-        }
-        reponse.set_cookie("SESSION",value=token) 
-        return reponse 
+        
+        if is_authenticated:
+            payload = {
+                "id": user.id,
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10),
+                "iat": datetime.datetime.utcnow()
+            }
+            token = jwt.encode(payload, 'secret', algorithm="HS256")
+            
+            # Send additional data to frontend
+            data_to_frontend = {
+                "username": user.username,
+                "is_authenticated": True
+            }
+        else:
+            token = None
+            data_to_frontend = {
+                "is_authenticated": False
+            }
+        
+        response = Response(data_to_frontend)
+        
+        if token:
+            response.set_cookie("SESSION", value=token)
+        
+        return response
+    
     
 
 
