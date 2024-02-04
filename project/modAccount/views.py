@@ -26,7 +26,7 @@ class SentarticlesModview(APIView):
         return Response({'articles': articles_list})
     
 
-class deleteArticleView(APIView):
+class deleteArticleview(APIView):
     def post(self, request):
         article_id = request.data.get("article_id")
         mod_id = request.data.get("moderator_id")

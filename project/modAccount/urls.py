@@ -5,5 +5,7 @@ from .views import *
 
 urlpatterns = [
     path('SentarticlesMod',SentarticlesModview.as_view()),
+    path('deleteArticleMod',deleteArticleview.as_view()), 
+    
     
 ]
