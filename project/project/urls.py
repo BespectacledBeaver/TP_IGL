@@ -22,6 +22,6 @@ urlpatterns = [
     path('',include('pages.urls')),
     path('',include('searchApp.urls')),
     path('',include('userManagementApp.urls')),
-    
+    path('',include('modAccount.urls')),
 
 ]
