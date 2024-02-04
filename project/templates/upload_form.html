@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File</title>
+</head>
+
+<body>
+    <h1>Upload a File</h1>
+
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p> <!-- Display the error message -->
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+</body>
+
+</html>

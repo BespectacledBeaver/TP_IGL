@@ -13,8 +13,9 @@ class Article(models.Model):
     institutions = models.CharField(max_length=200)  
     keywords = models.CharField(max_length=200)  
     #text = models.FileField(upload_to='article_texts/')  
-    pdf_url = models.URLField()
+    pdf_url = models.FileField(upload_to='pdf_files/')
     references = models.TextField()  
+    
 
 
     def __str__(self):

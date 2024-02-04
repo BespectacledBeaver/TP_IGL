@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project',
         'USER':'postgres',
-        'PASSWORD':'tpigl6mhdi',
+        'PASSWORD':'12311231',
         'HOST':'localhost',
         'PORT':'5432',
     }
@@ -143,3 +143,9 @@ CORS_ALLOW_ALL_ORIGINS: True
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://localhost:9200',
+    },
+}

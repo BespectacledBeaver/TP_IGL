@@ -16,12 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
+from adminApp.views import upload_file
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('pages.urls')),
     path('',include('searchApp.urls')),
     path('',include('userManagementApp.urls')),
+<<<<<<< Updated upstream
     
+=======
+    path('',include('modAccount.urls')),
+    path('upload/', upload_file, name='upload_file'),
+    path('articles/', include('articleManagementAPP.urls')),
+>>>>>>> Stashed changes
 
 ]
