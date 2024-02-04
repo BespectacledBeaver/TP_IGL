@@ -8,10 +8,7 @@ import jwt , datetime
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.urls import reverse_lazy
-from rest_framework.decorators import api_view
 
-
-#@api_view(['POST'])
 class Signupview(APIView):
     def post(self , request): 
     

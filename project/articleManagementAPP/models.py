@@ -80,6 +80,3 @@ class Article(models.Model):
    #not completed yet there are more functions to add that are related to the favoriteArticles part 
 
 
-class UserArticle(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)

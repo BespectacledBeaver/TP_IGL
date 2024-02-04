@@ -7,3 +7,10 @@ class UserSerializer(ModelSerializer):
         model = User
         fields = '__all__'
         #fields = ['id','username','password']
+
+
+
+class FavoriteArticleSerializer(ModelSerializer):
+    class Meta(object):
+        model = FavoriteArticle
+        fields = ['id', 'user', 'article']
