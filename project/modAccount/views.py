@@ -23,7 +23,7 @@ class SentarticlesModview(APIView):
         articles_list = list(articles)
     
         #response = Response(articles_list)
-        return Response({'articles': articles_list})
+        return Response(articles_list)
     
 
 class deleteArticleview(APIView):

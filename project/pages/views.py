@@ -24,7 +24,7 @@ class Signupview(APIView):
                 serializer.save()
 
                 data_to_frontend = {
-                "username": username,
+                "userid": user.id,
                 "is_authenticated": True
                 }
 
@@ -68,7 +68,7 @@ class Loginview(APIView):
             
             # Send additional data to frontend
             data_to_frontend = {
-                "username": user.username,
+                "userid": user.id,
                 "is_authenticated": True
             }
         else:

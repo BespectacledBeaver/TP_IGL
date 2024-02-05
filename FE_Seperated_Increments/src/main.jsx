@@ -5,6 +5,10 @@ import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import Home from "./UserView/HomePage";
 import Articles from "./UserView/ArticlesPage";
 import Favorites from "./UserView/FavoritesPage";
+import ArticlePage from './UserView/ArticlePage';
+import ModeratorLogIn from './ModeratorView/ModeratorLogInPage';
+import AdminLogIn from './AdminView/AdminLogInPage';
+import ModMenu from './ModeratorView/ModerationPage';
 
 const router = createBrowserRouter([
   {
@@ -12,12 +16,28 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: ":id/*",
+    path: "/:id",
     element: <Articles />,
   },
   {
-    path: ":id/favorites",
+    path: "/:id/favorites",
     element: <Favorites />,
+  },
+  {
+    path: "/:id/article/:id",
+    element: <ArticlePage />,
+  },
+  {
+    path: "/dQw4w9WgXcQ(moderator)",
+    element: <ModeratorLogIn />,
+  },
+  {
+    path: "/modmenu",
+    element: <ModMenu />,
+  },
+  {
+    path: "/temp(admin)",
+    element: <AdminLogIn />,
   },
 
 ]);

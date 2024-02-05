@@ -4,27 +4,32 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from articleManagementAPP.models import Article
+from userManagementApp.models import User , FavoriteArticle
 from articleManagementAPP.serializers import ArticleSerializer
 from django.db.models import Q
-
-
-from rest_framework.views import APIView 
-from articleManagementAPP.models import Article
-from rest_framework.response import Response 
-
-# Create your views here.
-
-
 
 class Sentarticlesview(APIView):
 
     def post(self , request): 
-        articles = Article.objects.all().values('id','title', 'publication_date', 'authors')
-        articles = articles.order_by('-publication_date')
-        articles_list = list(articles)
-    
-        #response = Response(articles_list)
-        return Response({'articles': articles_list})
+        userid = request.data.get("userid")
+        if userid is not None:
+            user = User.objects.get(id=userid)
+
+        # Récupérer tous les articles avec une indication sur s'ils sont favoris ou non pour l'utilisateur actuel
+        articles = []
+        all_articles = Article.objects.all().values('id', 'title', 'publication_date', 'authors')
+        for article_data in all_articles:
+            article_id = article_data['id']
+            is_favorite = FavoriteArticle.objects.filter(user=user, article_id=article_id).exists()
+            article_data['is_favorite'] = is_favorite
+            articles.append(article_data)
+
+        # Trier les articles par date de publication
+        articles = sorted(articles, key=lambda x: x['publication_date'], reverse=True)
+        list_articles =  list(articles)
+
+        return Response(list_articles)
+
     
         
 
@@ -53,17 +58,17 @@ class SearchArticlesView(APIView):
             elif option == 'institutions':
                 queryset |= Article.objects.filter(institutions__icontains=keywords)
 
-        filtered_results = []
+        filtered_results = Article.objects.none()
         for article in queryset:    
             if (not start_date or option['publication_date'] >= start_date) and \
                (not end_date or option['publication_date'] <= end_date):
-                filtered_results.append(article)
+                filtered_results |= article
         
 
          # Sort the queryset by publication_date in descending order (most recent first)
         filtered_results = filtered_results.order_by('-publication_date') # - is for descending order 
         
-        articles = filtered_results.objects.all().values('id','title', 'publication_date', 'authors')
+        articles = filtered_results.values('id','title', 'publication_date', 'authors')
         articles_list = list(articles)
         response = Response(articles_list)
         return response
