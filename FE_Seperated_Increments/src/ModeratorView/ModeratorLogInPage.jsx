@@ -2,7 +2,7 @@ import "../styles.css";
 import "../Home.css";
 import "../SuperLogIn.css";
 
-export default function App() {
+export default function ModeratorLogIn() {
 
   return <div className="main">
       <forum className="frame" method="post">

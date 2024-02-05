@@ -26,8 +26,32 @@ class SauvegarderFavview(APIView):
                 user = User.objects.get(id=userid)
                 article = Article.objects.get(id=articleid)
                 favorite_article = FavoriteArticle(user=user, article=article)
+                favorite_article.id = str(userid)+"0"+str(articleid)
                 favorite_article.save()
                 return Response("Favorite article saved successfully", status=status.HTTP_201_CREATED)
+            
+            except User.DoesNotExist:
+                return Response("User does not exist", status=status.HTTP_400_BAD_REQUEST)
+            
+            except Article.DoesNotExist:
+                return Response("Article does not exist", status=status.HTTP_400_BAD_REQUEST)
+            
+        else:
+            return Response("Missing usernameid or articleid", status=status.HTTP_400_BAD_REQUEST)
+        
+class EnleverFavview(APIView):
+
+    def post(self , request): 
+        userid = request.data.get("userid")
+        articleid = request.data.get("articleid")
+
+        if userid is not None and articleid is not None :
+            try:
+                user = User.objects.get(id=userid)
+                article = Article.objects.get(id=articleid)
+                favorite_article = FavoriteArticle.objects.get(user=user, article=article)
+                favorite_article.delete()
+                return Response("Favorited article deleted successfully", status=status.HTTP_201_CREATED)
             
             except User.DoesNotExist:
                 return Response("User does not exist", status=status.HTTP_400_BAD_REQUEST)

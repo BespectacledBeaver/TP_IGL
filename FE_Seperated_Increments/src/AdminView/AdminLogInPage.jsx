@@ -2,7 +2,7 @@ import "../styles.css";
 import "../Home.css";
 import "../SuperLogIn.css";
 
-export default function App() {
+export default function AdminLogIn() {
 
   return <div className="main">
       <forum className="frame" method="post">
@@ -13,7 +13,7 @@ export default function App() {
           <input type="password" id="password" name="password" aria-label="password" placeholder="Password"/>
         </div>
 
-        <input className="log-in__button" type="submit" value="Log-in" id="button-log-in"/>
+        <input className="log-in__button" type="submit" value="Log-in" id="button-log-in" onClick={e => window.location.href = 'http://localhost:8000/admin/'}/>
       </forum>
       <div className='wave-scroller'>
         <div className='wave-scroller__inner'>

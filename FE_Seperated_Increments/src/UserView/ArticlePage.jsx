@@ -1,8 +1,17 @@
 import { Header, Footer } from './CommonFunctions';
+import { useLocation } from 'react-router-dom';
 import "./Article.css";
 import "../styles.css";
 
-export default function App() {
+export default function ArticlePage() {
+    let location = useLocation();
+    console.log(location.pathname);
+    let urlParts = location.pathname.split('/');
+    let userid = urlParts[1];
+    let articleId = urlParts[3];
+
+    console.log(userid);
+    console.log(articleId);
 
     return <>
         <Header />

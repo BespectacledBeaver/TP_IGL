@@ -1,19 +1,26 @@
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import siteLogo from '../assets/scientifically.svg';
-import ArticlesPage from './ArticlesPage';
-import FavoritesPage from './FavoritesPage';
 
 export function Header() {
+    let location = useLocation();
+    let urlParts = location.pathname.split('/');
+    let userid = urlParts[1];
+
+    let navigate = useNavigate();
+    const handleLogoClick = () => {
+        navigate('/'+userid, {replace: true});
+    };
+
+    const handleFavoritesClick = () => {
+        navigate('/'+userid+'/favorites', {replace: true});
+    };
+
     return <header>
-        <a onClick={useNavigate('/user')}>
-            <img className="logo" src={siteLogo} alt="" onClick={useNavigate('/user')}/>
+        <a onClick={handleLogoClick}>
+            <img className="logo" src={siteLogo} alt=""/>
         </a>
-        <a className="profile" onClick={useNavigate('/user/favorites')}>
+        <a className="profile" onClick={handleFavoritesClick}>
         </a>
-        <Routes>
-          <Route exact path="user"/>
-          <Route exact path="user/favorites" />
-        </Routes>
     </header>
 }
 

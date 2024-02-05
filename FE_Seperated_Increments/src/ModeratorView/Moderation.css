@@ -103,7 +103,7 @@
     fill: var(--white-500);
 }
 
-.article {
+.mod-article {
     display: flex;
     align-items: center;
     background-color: var(--white-500);
@@ -119,14 +119,14 @@
     transition: all 500ms ease-out;
 }
 
-.article:hover {
+.mod-article:hover {
     color: var(--primary-700);
     background-color: var(--primary-50);
     border: 3px solid var(--primary-500);
     transition: all 200ms ease-in;
 }
 
-.article>p {
+.mod-article>p {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

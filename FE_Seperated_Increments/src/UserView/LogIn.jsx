@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {Routes, Route, useNavigate} from 'react-router-dom';
-import ArticlesPage from './ArticlesPage';
+import {useNavigate} from 'react-router-dom';
 
 export function LogInButton({ openModal }) {
 
@@ -29,10 +28,13 @@ export function LogInForum({ openModal, closeModal }) {
         password: password,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if(response.ok){
-          navigate(data.username);
+      .then(response => response.json())
+      .then(data => {
+        if (data.is_authenticated) {
+          navigate(data.userid.toString());
+        } else {
+          console.log('Sign-up failed!');
+          // Handle failed Sign-up, e.g., display error message
         }
       })
       .catch((error) => {
@@ -55,7 +57,8 @@ export function LogInForum({ openModal, closeModal }) {
       .then(response => response.json())
       .then(data => {
         if (data.is_authenticated) {
-          navigate(data.username);
+          console.log(data.userid);
+          navigate(data.userid.toString());
         } else {
           console.log('Login failed!');
           // Handle failed login, e.g., display error message
@@ -94,9 +97,6 @@ export function LogInForum({ openModal, closeModal }) {
         {(bool && <button type='submit' className="log-in__button" onClick={handleSignup}>
           Sign-up
         </button>)}
-        <Routes>
-          <Route exact path="/:id" component={ArticlesPage} />
-        </Routes>
       </forum>
       {(!bool && <><p>Don't have an account?</p>
         <button type='submit' className="log-in__button" onClick={() => { signUp(true); toggleHeading("Sign-up"); }}>

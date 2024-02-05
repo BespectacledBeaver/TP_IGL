@@ -1,28 +1,89 @@
-import { useState } from "react";
-import { Header, Navigation, Footer } from './CommonFunctions';
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Header, /*Navigation,*/ Footer } from './CommonFunctions';
 import { Article } from './Article';
 import "./Articles.css";
 import "../styles.css";
 
 export default function Articles() {
-    const [articles, setBookmark] = useState([]);
-    const [currentNavPage, setCurrentNavPage] = useState(1);
+    let location = useLocation();
+    let urlParts = location.pathname.split('/');
+    let userid = urlParts[1];
 
+    const [articles, setArticles] = useState([]);
+    
+    const [keywords, setKeywords] = useState('');
+    const [searchOption, setSearchOption] = useState('');
+    const [dateStart, setDateStart] = useState('');
+    const [dateEnd, setDateEnd] = useState('');
+    /*const [articles, setBookmark] = useState([]);*/
+    /*
+    const [currentNavPage, setCurrentNavPage] = useState(1);
     const goBack = () => {setCurrentNavPage(currentNavPage - 1)};
     const goForward = () => {setCurrentNavPage(currentNavPage + 1)};
+    */
+
+    useEffect(() => {
+        async function fetchArticles() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/Sentarticles', {method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userid: userid,
+                }),});
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setArticles(data);
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching articles:', error);
+            }
+        }
+        fetchArticles();
+    }, []);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        fetch('http://127.0.0.1:8000/Searcharticles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                search_options: searchOption,
+                keywords: keywords,
+                start_date: dateStart,
+                end_date: dateEnd,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                setArticles(data);
+                console.log(data);
+                /*console.log(searchOption);
+                console.log(keywords);
+                console.log(dateStart);
+                console.log(dateEnd);*/
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
     return <>
         <Header />
         <div className="main">
-            <forum>
-            <input type="radio" name="criteria" id="title" className="criterion-input" aria-hidden="true" />
+            <form method='post' onSubmit={handleSubmit}>
+                <input type="radio" name="criteria" id="title" className="criterion-input" aria-hidden="true" />
                 <input type="radio" name="criteria" id="key-words" className="criterion-input" aria-hidden="true" />
                 <input type="radio" name="criteria" id="authors" className="criterion-input" aria-hidden="true" />
                 <input type="radio" name="criteria" id="institutions" className="criterion-input" aria-hidden="true" />
                 <input type="submit" id="submit" aria-hidden="true" />
 
                 <div className="search-bar">
-                    <input type="text" />
+                    <input type="text" value={keywords} onChange={e => setKeywords(e.target.value)}/>
                     <label htmlFor="submit">
                         <svg aria-hidden="true" viewBox="0 0 100 100" className="lens">
                             <circle cx="50" cy="50" r="50" className="lens-bg" />
@@ -32,22 +93,28 @@ export default function Articles() {
                     </label>
                 </div>
 
-                <label htmlFor="title" className="criterion-label"> title </label>
-                <label htmlFor="key-words" className="criterion-label"> key words </label>
-                <label htmlFor="authors" className="criterion-label"> authors </label>
-                <label htmlFor="institutions" className="criterion-label"> institutions </label>
+                <label htmlFor="title" className="criterion-label" onClick={e => setSearchOption('title')}> title </label>
+                <label htmlFor="key-words" className="criterion-label" onClick={e => setSearchOption('keywords')}> keywords </label>
+                <label htmlFor="authors" className="criterion-label" onClick={e => setSearchOption('authors')}> authors </label>
+                <label htmlFor="institutions" className="criterion-label" onClick={e => setSearchOption('institutions')}> institutions </label>
 
                 <div className="test">
                     <div className="date__container">
                         <p>From</p>
-                        <input type="date" name="" id="start" value="" />
+                        <input type="date" name="start" id="start" value={dateStart} onChange={e => setDateStart(e.target.value)} />
                     </div>
                     <div className="date__container">
                         <p>To</p>
-                        <input type="date" name="" id="end" value="" />
+                        <input type="date" name="end" id="end" value={dateEnd} onChange={e => setDateEnd(e.target.value)} />
                     </div>
                 </div>
-            </forum>
+            </form>
+            <div className="articles-list">
+                {articles.map(article => {
+                    return <Article key={article.id} id={article.id} title={article.title} authors={article.authors} date={article.publication_date} favorited={article.is_favorite}/>
+                })}
+            </div>
+            {/*
             <div className="articles-list">
                 <Article />
                 <div className="article">
@@ -212,7 +279,7 @@ export default function Articles() {
                         </svg>
                     </label>
                 </div>
-            </div>
+        </div>*/}
             {/*<Navigation currentNavPage={currentNavPage} maxNavPages={5} goback={goBack} goforward={goForward}/>*/}
         </div>
         <Footer />

@@ -1,10 +1,33 @@
+import { useState, useEffect } from "react";
 import "../styles.css";
 import "./Moderation.css";
 
-export default function App() {
+export default function ModMenu() {
+    const [articles, setArticles] = useState([]);
+
+    const chosenArticle = event => {
+        console.log(event.currentTarget.id);
+    }
+
+    useEffect(() => {
+        async function fetchArticles() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/SentarticlesMod', { method: 'POST' });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setArticles(data);
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching articles:', error);
+            }
+        }
+        fetchArticles();
+    }, []);
 
     return <>
-        <input className="mod-tab__input" type="radio" name="ModTabs" id="list-tab" checked />
+        <input className="mod-tab__input" type="radio" name="ModTabs" id="list-tab" defaultChecked />
         <input className="mod-tab__input" type="radio" name="ModTabs" id="text-tab" />
         <div className="main">
             <div className="articles-list-tab">
@@ -14,51 +37,11 @@ export default function App() {
                     </svg>
                 </label>
                 <div>
-                    <div className="article">
-                        <p>A pilot study using a machine-learning approach of morphological and hemodynamic parameters for predicting aneurysms enhancement</p>
-                    </div>
-                    <div className="article">
-                        <p>AI Model for Computer games based on Case Based Reasoning and AI Planning</p>
-                    </div>
-                    <div className="article">
-                        <p>Semantic Analysis and Classification of Emails through Informative Selection of Features and Ensemble AI Model</p>
-                    </div>
-                    <div className="article">
-                        <p>ModelGame: A Quality Model for Gamified Software Modeling Learning</p>
-                    </div>
-                    <div className="article">
-                        <p>How to Teach Software Modeling</p>
-                    </div>
-                    <div className="article">
-                        <p>Towards a Quantum Software Modeling Language</p>
-                    </div>
-                    <div className="article">
-                        <p>A Prototype Implementation of an Orthographic Software Modeling Environment</p>
-                    </div>
-                    <div className="article">
-                        <p>Large Language Model Augmented Narrative Driven Recommendations</p>
-                    </div>
-                    <div className="article">
-                        <p>Framing the News: From Human Perception to Large Language Model Inferences</p>
-                    </div>
-                    <div className="article">
-                        <p>Generating Diverse Code Explanations using the GPT-3 Large Language Model</p>
-                    </div>
-                    <div className="article">
-                        <p>The Programmer's Assistant: Conversational Interaction with a Large Language Model for Software Development</p>
-                    </div>
-                    <div className="article">
-                        <p>Fuzzy logic based MPPT control for a PV system using SEPIC converter</p>
-                    </div>
-                    <div className="article">
-                        <p>Numerical computing in engineering mathematics</p>
-                    </div>
-                    <div className="article">
-                        <p>SMT 2.0: A Surrogate Modeling Toolbox with a focus on hierarchical and mixed variables Gaussian processes</p>
-                    </div>
-                    <div className="article">
-                        <p>Improved stochastic subset optimization method for structural design optimization</p>
-                    </div>
+                    {articles.map(article => {
+                        return <div className="mod-article" id={article.id} onClick={chosenArticle}>
+                            <p>{article.title}</p>
+                        </div>
+                    })}
                 </div>
             </div>
             <div className="article-tab">
@@ -87,26 +70,26 @@ export default function App() {
                             #&lt;p className="article-title"#&gt;<br></br>A pilot study using a machine-learning approach of morphological and hemodynamic parameters for predicting aneurysms enhancement#&lt;/p#&gt;<br></br>
                             #&lt;p className="bold centered"#&gt;<br></br>Nan Lv1 · Christof Karmonik2 · Zhaoyue Shi2 · Shiyue Chen3 · Xinrui Wang3 · Jianmin Liu1 · Qinghai Huang1#&lt;/p#&gt;<br></br>
                             #&lt;p className="article-paragraph"#&gt;<br></br>Received: 16 December 2019 / Accepted: 18 May 2020
-                                © CARS 2020
+                            © CARS 2020
                             #&lt;/p#&gt;<br></br>
                             #&lt;p className="article-heading"#&gt;<br></br>Abstract#&lt;/p#&gt;<br></br>
                             #&lt;p className="article-paragraph"#&gt;<br></br>
-                                Purpose The development of straightforward classification methods is needed to identify unstable aneurysms and rupture
-                                risk for clinical use. In this study, we aim to investigate the relative importance of geometrical, hemodynamic and clinical risk
-                                factors represented by the PHASES score for predicting aneurysm wall enhancement using several machine-learning (ML)
-                                models.
-                                Methods Nine different ML models were applied to 65 aneurysm cases with 24 predictor variables. ML models were
-                                optimized with the training set using tenfold cross-validation with five repeats with the area under the curve (AUC) as cost
-                                parameter. Models were validated using the test set. Accuracy being significantly higher (p 0.05) than the non-information
-                                rate (NIR) was used as measure of performance. The relative importance of the predictor variables was determined from a
-                                subset of five ML models in which this information was available.
-                                Results Best-performing ML model was based on gradient boosting (AUC 0.98). Second best-performing model was based
-                                on generalized linear modeling (AUC 0.80). The size ratio was determined as the dominant predictor for wall enhancement
-                                followed by the PHASES score and mean wall shear stress value at the aneurysm wall. Four ML models exhibited a statistically
-                                significant higher accuracy (0.79) than the NIR (0.58): random forests, generalized linear modeling, gradient boosting and
-                                linear discriminant analysis.
-                                Conclusions ML models are capable of predicting the relative importance of geometrical, hemodynamic and clinical parameters for aneurysm wall enhancement. Size ratio, PHASES score and mean wall shear stress value at the aneurysm wall are
-                                of highest importance when predicting wall enhancement in cerebral aneurysms#&lt;/p#&gt;<br></br>
+                            Purpose The development of straightforward classification methods is needed to identify unstable aneurysms and rupture
+                            risk for clinical use. In this study, we aim to investigate the relative importance of geometrical, hemodynamic and clinical risk
+                            factors represented by the PHASES score for predicting aneurysm wall enhancement using several machine-learning (ML)
+                            models.
+                            Methods Nine different ML models were applied to 65 aneurysm cases with 24 predictor variables. ML models were
+                            optimized with the training set using tenfold cross-validation with five repeats with the area under the curve (AUC) as cost
+                            parameter. Models were validated using the test set. Accuracy being significantly higher (p 0.05) than the non-information
+                            rate (NIR) was used as measure of performance. The relative importance of the predictor variables was determined from a
+                            subset of five ML models in which this information was available.
+                            Results Best-performing ML model was based on gradient boosting (AUC 0.98). Second best-performing model was based
+                            on generalized linear modeling (AUC 0.80). The size ratio was determined as the dominant predictor for wall enhancement
+                            followed by the PHASES score and mean wall shear stress value at the aneurysm wall. Four ML models exhibited a statistically
+                            significant higher accuracy (0.79) than the NIR (0.58): random forests, generalized linear modeling, gradient boosting and
+                            linear discriminant analysis.
+                            Conclusions ML models are capable of predicting the relative importance of geometrical, hemodynamic and clinical parameters for aneurysm wall enhancement. Size ratio, PHASES score and mean wall shear stress value at the aneurysm wall are
+                            of highest importance when predicting wall enhancement in cerebral aneurysms#&lt;/p#&gt;<br></br>
                         </div>
                     </div>
                 </forum>

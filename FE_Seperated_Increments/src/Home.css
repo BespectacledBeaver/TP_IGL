@@ -115,14 +115,16 @@ body:has(.wave) {
     height: auto;
 }
 
-.modal__inner>forum {
+.modal__inner>forum,
+.frame {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.modal__inner>forum button {
+.modal__inner>forum button,
+.frame button {
     margin-top: 1.25rem;
 }
 
@@ -145,7 +147,9 @@ textarea {
 }
 
 .modal__inner>forum input[type="text"],
-.modal__inner>forum input[type="password"] {
+.modal__inner>forum input[type="password"],
+.frame input[type="text"],
+.frame input[type="password"] {
     outline: none;
     box-sizing: border-box;
     font-size: var(--fs-400);
@@ -166,18 +170,21 @@ textarea {
 
 
 .modal__inner>forum input[type="text"]:focus,
-.modal__inner>forum input[type="password"]:focus {
+.modal__inner>forum input[type="password"]:focus,
+.frame input[type="text"]:focus,
+.frame input[type="password"]:focus {
     outline: none;
     border: 2px solid var(--primary-500);
     color: var(--primary-500);
 }
 
-.modal__inner>forum input[type="password"]:invalid {
+.modal__inner>forum input[type="password"]:invalid,
+.frame input[type="password"]:invalid {
     outline: none;
     border: 2px solid var(--red-600);
 }
 
-.main {
+.main:has(.wave) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -235,11 +242,11 @@ textarea {
 }
 
 @media screen and (orientation: portrait){
-    body {
+    body:has(.wave) {
         background: linear-gradient(#F1F3F5 0% 50%, var(--primary-500) 50% 100%);
     }
 
-    .main {
+    .main:has(.wave) {
         height: 75%;
         justify-content: center;
         align-items: center;

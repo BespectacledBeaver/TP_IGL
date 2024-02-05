@@ -1,4 +1,4 @@
-#root {
+#root:has(.article-content) {
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
@@ -12,7 +12,7 @@
     background-color: var(--primary-500);
 }
 
-.main {
+.main:has(.article-content) {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@
     background: linear-gradient(to bottom, #D3DCE4 calc(4*var(--fs-600)), white calc(10*var(--fs-600)) calc(100% - 10*var(--fs-600)) ,#D3DCE4 100%);
 }
 
-body {
+body:has(.article-content) {
     background-color: var(--white-500);
 }
 
@@ -51,12 +51,12 @@ body {
     transition: color 250ms ease-in;
 }
 
-.bookmark-input {
+.article-header>.bookmark-input {
     display: none;
 }
 
-.openpdf__container,
-.bookmark__container {
+.article-header .openpdf__container,
+.article-header .bookmark__container {
     width: 5vw;
     display: grid;
     place-items: center;
@@ -64,19 +64,19 @@ body {
     transition: all 500ms ease-out;
 }
 
-.bookmark__container {
+.article-header .bookmark__container {
     margin-right: var(--fs-900);
 }
 
-.openpdf,
-.bookmark {
+.article-header .openpdf,
+.article-header .bookmark {
     aspect-ratio: 1;
     width: calc(var(--fs-900) + 10px);
 }
 
-.openpdf,
-.to-bookmark,
-.bookmarked {
+.article-header .openpdf,
+.article-header .to-bookmark,
+.article-header .bookmarked {
     fill: var(--primary-500);
     scale: 0.99 1.01;
 
@@ -90,14 +90,14 @@ body {
     to {scale: 1 1;}
 }
 
-.bookmark-input:checked~.bookmark__container .to-bookmark,
-.bookmark-input:not(:checked)~.bookmark__container .bookmarked {
+.article-header .bookmark-input:checked~.bookmark__container .to-bookmark,
+.article-header .bookmark-input:not(:checked)~.bookmark__container .bookmarked {
     fill-opacity: 0;
 }
 
-.openpdf:hover,
-.bookmark:hover .to-bookmark,
-.bookmark:hover .bookmarked {
+.article-header .openpdf:hover,
+.article-header .bookmark:hover .to-bookmark,
+.article-header .bookmark:hover .bookmarked {
     fill: var(--primary-700);
     
     scale: 1.015 0.985;
@@ -118,7 +118,7 @@ body {
     color: #fff;
 }
 
-.article-title {
+.article-content .article-title {
     margin-inline: auto;
     margin-block: 3rem;
     font-size: var(--fs-500);
@@ -144,7 +144,8 @@ body {
     margin-inline: auto;
 }
 
-footer {
+.main:has(.article-content) ~ footer {
     background-color: #D3DCE4;
     color: var(--grey-500) !important;
+    margin-top: 0;
 }
