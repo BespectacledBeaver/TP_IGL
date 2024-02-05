@@ -20,16 +20,20 @@ class Signupview(APIView):
             if user is None:
 
                 serializer = UserSerializer(data=request.data)
-                serializer.is_valid(raise_exception=True)
-                serializer.save()
-
-                data_to_frontend = {
-                "userid": user.id,
-                "is_authenticated": True
-                }
-
-                response = Response(data_to_frontend)
-                return response
+                if serializer.is_valid():
+                    user = serializer.save()  
+                    data_to_frontend = {
+                        "userid": user.id,
+                        "is_authenticated": True
+                    }
+                    return Response(data_to_frontend, status=status.HTTP_201_CREATED)
+                else:
+                    data_to_frontend = {
+                        "is_authenticated": False,
+                        "errors": serializer.errors
+                    }
+                    return Response(data_to_frontend, status=status.HTTP_400_BAD_REQUEST)
+            
             else:
                 data_to_frontend = {
                 "is_authenticated": False

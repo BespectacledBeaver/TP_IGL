@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'project',
         'USER':'postgres',
-        'PASSWORD':'252003',
+        'PASSWORD':'tpigl6mhdi',
         'HOST':'localhost',
         'PORT':'5432',
     }
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-gb'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -144,5 +144,3 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
 ]
 
-DATE_FORMAT = "d/m/Y"
-USE_L10N = False
