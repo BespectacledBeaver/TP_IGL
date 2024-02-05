@@ -8,6 +8,11 @@ from userManagementApp.models import User , FavoriteArticle
 from articleManagementAPP.serializers import ArticleSerializer
 from django.db.models import Q
 
+
+# Create your views here.
+
+
+
 class Sentarticlesview(APIView):
 
     def post(self , request): 
@@ -27,15 +32,20 @@ class Sentarticlesview(APIView):
         # Trier les articles par date de publication
         articles = sorted(articles, key=lambda x: x['publication_date'], reverse=True)
         list_articles =  list(articles)
-
+    
         return Response(list_articles)
-
     
         
 
 
 class SearchArticlesView(APIView):
     def post(self, request):
+
+        userid = request.data.get("userid")
+        if userid is not None:
+            user = User.objects.get(id=userid)
+
+
         search_options = request.data.get('search_options', [])
         keywords = request.data.get('keywords', [])
         start_date = request.data.get('start_date', [])
@@ -68,8 +78,8 @@ class SearchArticlesView(APIView):
          # Sort the queryset by publication_date in descending order (most recent first)
         filtered_results = filtered_results.order_by('-publication_date') # - is for descending order 
         
-        articles = filtered_results.values('id','title', 'publication_date', 'authors')
+        articles = filtered_results.all().values('id','title', 'publication_date', 'authors')
         articles_list = list(articles)
-        response = Response(articles_list)
-        return response
+        return Response(articles_list)
+        
     
