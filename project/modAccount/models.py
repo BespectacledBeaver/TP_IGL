@@ -3,7 +3,7 @@ from articleManagementAPP.models import Article
 
 # Create your models here.
 class Mod(models.Model):
-    userName = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
 
     def modifyArticle(self, article_id, new_data):

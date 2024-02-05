@@ -7,12 +7,53 @@ from articleManagementAPP.models import Article
 from articleManagementAPP.serializers import ArticleSerializer
 from django.db.models import Q
 from .models import Mod
-
+import jwt , datetime  
 
 
 
 # Create your views here.
 
+class Loginview(APIView):
+    def post(self , request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        moderateur = Mod.objects.filter(username=username).first()
+        
+        visitor = "Not Found"
+        is_authenticated = False 
+        if moderateur is not None:
+            if  moderateur.password == password :
+                visitor = "moderateur"
+                is_authenticated = True
+       
+        
+        if is_authenticated:
+            payload = {
+                "id": moderateur.id,
+                "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=10),
+                "iat": datetime.datetime.utcnow()
+            }
+            token = jwt.encode(payload, 'secret', algorithm="HS256")
+            
+            # Send additional data to frontend
+            data_to_frontend = {
+                "moderateur": moderateur.username,
+                "is_authenticated": True
+            }
+        else:
+            token = None
+            data_to_frontend = {
+                "is_authenticated": False
+            }
+        
+        response = Response(data_to_frontend)
+        
+        if token:
+            response.set_cookie("SESSION", value=token)
+        
+        return response
+    
+    
 
 
 class SentarticlesModview(APIView):
