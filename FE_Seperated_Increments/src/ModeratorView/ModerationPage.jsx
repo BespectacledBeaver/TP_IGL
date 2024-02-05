@@ -5,13 +5,33 @@ import "./Moderation.css";
 export default function ModMenu() {
     const [articles, setArticles] = useState([]);
     const [articleToModify, setArticleToModify] = useState('');
+    const [articleListView, setArticleListView] = useState(true);
 
     const chosenArticle = event => {
+        console.log(event.currentTarget.id);
         setArticleToModify(event.currentTarget.id);
+        console.log(articleToModify);
+        setArticleListView(false);
     }
 
     const deleteArticle = () => {
-
+        fetch('http://127.0.0.1:8000/DeleteArticleMod', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        article_id : articleToModify,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error('Error:', error));
+      window.location.reload(false);
+      setArticleListView(true);
+      setArticleToModify('');
     }
 
     const saveArticle = () => {
@@ -27,7 +47,6 @@ export default function ModMenu() {
                 }
                 const data = await response.json();
                 setArticles(data);
-                console.log(data);
             } catch (error) {
                 console.error('Error fetching articles:', error);
             }
@@ -37,7 +56,7 @@ export default function ModMenu() {
 
     return <>
         <input className="mod-tab__input" type="radio" name="ModTabs" id="list-tab" defaultChecked />
-        <input className="mod-tab__input" type="radio" name="ModTabs" id="text-tab" />
+        <input className="mod-tab__input" type="radio" name="ModTabs" id="text-tab" onChange={e=> setArticleListView(!articleListView)} checked={!articleListView}/>
         <div className="main">
             <div className="articles-list-tab">
                 <label className="text-tab-label" htmlFor="text-tab">
@@ -47,7 +66,7 @@ export default function ModMenu() {
                 </label>
                 <div>
                     {articles.map(article => {
-                        return <div className="mod-article" id={article.id} onClick={chosenArticle}>
+                        return <div key={article.id} className="mod-article" id={article.id} onClick={chosenArticle}>
                             <p>{article.title}</p>
                         </div>
                     })}
@@ -75,7 +94,7 @@ export default function ModMenu() {
                         </button>
                     </div>
                     <div className="article-modification">
-                        <div className="textarea" role="textbox" aria-multiline="true" contentEditable="true" >
+                        <div className="textarea" role="textbox" aria-multiline="true" /*contentEditable="true"*/ >
                             #&lt;p className="article-title"#&gt;<br></br>A pilot study using a machine-learning approach of morphological and hemodynamic parameters for predicting aneurysms enhancement#&lt;/p#&gt;<br></br>
                             #&lt;p className="bold centered"#&gt;<br></br>Nan Lv1 · Christof Karmonik2 · Zhaoyue Shi2 · Shiyue Chen3 · Xinrui Wang3 · Jianmin Liu1 · Qinghai Huang1#&lt;/p#&gt;<br></br>
                             #&lt;p className="article-paragraph"#&gt;<br></br>Received: 16 December 2019 / Accepted: 18 May 2020

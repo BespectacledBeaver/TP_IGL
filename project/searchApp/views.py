@@ -41,41 +41,39 @@ class Sentarticlesview(APIView):
 
 class SearchArticlesView(APIView):
     def post(self, request):
-
-        userid = request.data.get("userid")
-        if userid is not None:
-            user = User.objects.get(id=userid)
+        
+        #userid = request.data.get("userid")
+        #if userid is not None:
+        #    user = User.objects.get(id=userid)
 
 
         search_options = request.data.get('search_options', [])
         keywords = request.data.get('keywords', [])
-        str_start_date = request.data.get('start_date', [])
-        str_end_date = request.data.get('end_date', [])
-
-        start_date = datetime.strptime(str_start_date, "%Y-%m-%d")
-        end_date = datetime.strptime(str_end_date, "%Y-%m-%d")
-
-        if not keywords or not search_options:
-            return Response({'error': 'Please provide keywords and search options for the search'}, status=status.HTTP_400_BAD_REQUEST)
+        start_date = request.data.get('start_date', [])
+        end_date = request.data.get('end_date', [])
 
         # Initialize an empty queryset
-        queryset = Article.objects.none()
+        filter_conditions = Q()
 
-                       
         if search_options == 'title':
-            queryset |= Article.objects.filter(title__icontains=keywords)
+            filter_conditions |= Q(title__icontains=keywords)
         elif search_options == 'authors':
-            queryset |= Article.objects.filter(authors__icontains=keywords)
+            filter_conditions |= Q(authors__icontains=keywords)
         elif search_options == 'keywords':
-            queryset |= Article.objects.filter(keywords__icontains=keywords)
+            filter_conditions |= Q(keywords__icontains=keywords)
         elif search_options == 'institutions':
-            queryset |= Article.objects.filter(institutions__icontains=keywords)
+            filter_conditions |= Q(institutions__icontains=keywords)
 
-        filtered_results = Article.objects.none()
-        for article in queryset:    
-            if (not start_date or article.publication_date >= start_date) and \
-               (not end_date or article.publication_date <= end_date):
-                filtered_results |= article
+        # Debugging: Print constructed filter conditions
+        print(f"filter_conditions: {filter_conditions}")
+
+        # Add date filtering conditions
+        if start_date:
+            filter_conditions &= Q(publication_date__gte=start_date)
+        if end_date:
+            filter_conditions &= Q(publication_date__lte=end_date)
+
+        filtered_results = Article.objects.filter(filter_conditions)
         
 
          # Sort the queryset by publication_date in descending order (most recent first)

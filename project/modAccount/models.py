@@ -21,8 +21,8 @@ class Mod(models.Model):
 
             return None
         
-        
-    def deleteArticle(self, article_id):
+    @staticmethod
+    def deleteArticle(article_id):
         try:
             article = Article.objects.get(id=article_id)
             article.delete()

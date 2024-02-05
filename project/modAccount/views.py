@@ -37,6 +37,7 @@ class Loginview(APIView):
             
             # Send additional data to frontend
             data_to_frontend = {
+                "moderateur_id": moderateur.id,
                 "moderateur": moderateur.username,
                 "is_authenticated": True
             }
@@ -70,16 +71,9 @@ class SentarticlesModview(APIView):
 class deleteArticleview(APIView):
     def post(self, request):
         article_id = request.data.get("article_id")
-        mod_id = request.data.get("moderator_id")
 
-        if article_id is not None and mod_id is not None:
-            try:
-                moderator = Mod.objects.get(id=mod_id)
-            except Mod.DoesNotExist:
-                return Response({"message": "Le modérateur n'existe pas."}, status=404)
-
-
-            article = moderator.deleteArticle(article_id)
+        if article_id is not None:
+            article = Mod.deleteArticle(article_id)
             if article:
                 return Response({"message": "L'article a été supprimé avec succès."}, status=200)
             else:

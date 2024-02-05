@@ -88,9 +88,9 @@ export function LogInForum({ openModal, closeModal }) {
         <div className="password-input">
           <input type="password" id="password" name="password" aria-label="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        {(bool && <div className="password-input">
+        {/*(bool && <div className="password-input">
           <input type="password" id="password-conf" name="password-conf" aria-label="password-conf" placeholder="confirm password" />
-        </div>)}
+  </div>)*/}
         {(!bool && <button type='submit' className="log-in__button" onClick={handleLogin}>
           Log-in
         </button>)}

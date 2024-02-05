@@ -4,6 +4,7 @@ from .views import *
 
 
 urlpatterns = [
+    path('ModLogIn',Loginview.as_view()),
     path('SentarticlesMod',SentarticlesModview.as_view()),
     path('DeleteArticleMod',deleteArticleview.as_view()), 
     

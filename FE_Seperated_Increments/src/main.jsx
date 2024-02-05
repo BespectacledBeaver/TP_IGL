@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     element: <ModeratorLogIn />,
   },
   {
-    path: "/modmenu",
+    path: "/:id/modmenu",
     element: <ModMenu />,
   },
   {

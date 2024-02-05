@@ -54,6 +54,10 @@ input[type="password"] {
     outline: #86e2ef solid 5px;
 }
 
+.frame .log-in__button:hover {
+    color: var(--white-500);
+}
+
 .wave-scroller {
     mix-blend-mode: screen;
 }
