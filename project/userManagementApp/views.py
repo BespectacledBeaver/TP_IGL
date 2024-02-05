@@ -42,8 +42,8 @@ class SauvegarderFavview(APIView):
 
 
 class ConsulterFavView(APIView):
-    def get(self, request):
-        userid = request.query_params.get("userid")
+    def post(self, request):
+        userid = request.data.get("userid")
 
         if userid is not None:
             try:
@@ -52,7 +52,18 @@ class ConsulterFavView(APIView):
                 return Response({"message": "L'utilisateur n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
             favorite_articles = FavoriteArticle.objects.filter(user=user)
-            serializer = FavoriteArticleSerializer(favorite_articles, many=True)
-            return Response(serializer.data)
+            
+            articles_data = []
+            for fav_article in favorite_articles:
+                article_data = {
+                    "id": fav_article.article.id,
+                    "title": fav_article.article.title,
+                    "authors": fav_article.article.authors,
+                    "publication_date": fav_article.article.publication_date,
+                }
+                articles_data.append(article_data)
+                
+            articles_champs = list(articles_data)
+            return Response(articles_champs)
         else:
             return Response({"message": "L'identifiant de l'utilisateur est requis."}, status=status.HTTP_400_BAD_REQUEST)
