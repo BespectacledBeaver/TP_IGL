@@ -10,7 +10,7 @@ export default function Favorites() {
     let urlParts = location.pathname.split('/');
     let useridbruh = urlParts[1];
 
-    const [articles, setFavoritedArticles] = useState([]);
+    const [favorites, setFavoritedArticles] = useState([]);
     const [currentNavPage, setCurrentNavPage] = useState(1);
 
     const goBack = () => { setCurrentNavPage(currentNavPage - 1) };
@@ -29,7 +29,7 @@ export default function Favorites() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                setFavoritedArticles(data)
             })
             .catch((error) => {
                 // Handle errors
@@ -63,10 +63,10 @@ export default function Favorites() {
     return <>
         <Header />
         <div className="main">
-            <p className="title">Favorites</p>
+            <p className="favorites-title">Favorites</p>
             <div className="articles-list">
-                {articles.map(article => {
-                    return <Article key={article.id} id={article.id} title={article.title} authors={article.authors} date={article.publication_date} />
+                {favorites.map(favorite => {
+                    return <Article key={favorite.id} id={favorite.id} title={favorite.title} authors={favorite.authors} date={favorite.publication_date} favorited='True'/>
                 })}
             </div>
             {/*<Navigation currentNavPage={currentNavPage} maxNavPages={5} goback={goBack} goforward={goForward}/>*/}

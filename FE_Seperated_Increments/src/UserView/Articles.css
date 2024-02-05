@@ -1,4 +1,4 @@
-#root:has(.search-bar) {
+#root:has(.search-bar), #root:has(.favorites-title) {
     --gradient-threshold: 15%;
     background: linear-gradient(#F1F3F5 var(--gradient-threshold), var(--primary-500));
 
@@ -15,7 +15,7 @@
     background-color: var(--primary-500);
 }
 
-.main:has(.search-bar) {
+.main:has(.search-bar), .main:has(.favorites-title) {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -524,7 +524,7 @@
 
 /* FAVORITES PAGE */
 
-.title {
+.favorites-title {
     font-family: var(--ff-title) !important;
     font-size: clamp(51px, 16.029vw - 0.018rem, 10rem) !important;
     font-weight: 600 !important;

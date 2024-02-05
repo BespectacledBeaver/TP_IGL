@@ -1,4 +1,4 @@
-.main {
+.main:has(.articles-list-tab) {
     position: relative;
     display: grid;
     background-color: #F1F3F5;
@@ -25,7 +25,7 @@
     position: relative;
     background-color: #B5C9CF;
     background-image: linear-gradient(var(--_gradient-angle), #F1F3F5 0% calc(100% - 4px), transparent 4px 100%);
-    min-height: 100dvh;
+    min-height: 100%;
     overflow: hidden;
 
     transition: all 500ms ease-out;

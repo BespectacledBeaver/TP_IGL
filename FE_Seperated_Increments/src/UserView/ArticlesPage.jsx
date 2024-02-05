@@ -64,10 +64,10 @@ export default function Articles() {
             .then(data => {
                 setArticles(data);
                 console.log(data);
-                /*console.log(searchOption);
+                console.log(searchOption);
                 console.log(keywords);
                 console.log(dateStart);
-                console.log(dateEnd);*/
+                console.log(dateEnd);
             })
             .catch(error => console.error('Error:', error));
     }
