@@ -54,6 +54,7 @@ export default function Articles() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                userid : userid,
                 search_options: searchOption,
                 keywords: keywords,
                 start_date: dateStart,
