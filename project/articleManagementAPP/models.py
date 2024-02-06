@@ -6,15 +6,15 @@ import requests
 
 class Article(models.Model):
 
-    title = models.CharField(max_length=200)
-    publication_date = models.DateField()
-    authors = models.CharField(max_length=200)  
-    abstract = models.TextField()
-    institutions = models.CharField(max_length=200)  
-    keywords = models.CharField(max_length=200)  
-    #text = models.FileField(upload_to='article_texts/')  
-    pdf_url = models.URLField()
-    references = models.TextField()  
+    title = models.CharField(blank=True)
+    publication_date = models.DateField(null=True,blank=True)
+    authors = models.CharField(blank=True)  
+    abstract = models.TextField(blank=True)
+    institutions = models.CharField(blank=True)  
+    keywords = models.CharField(blank=True)  
+    text = models.TextField(null=True,blank=True)  
+    pdf_url = models.FileField(blank=True)
+    references = models.TextField(blank=True)  
 
 
     def __str__(self):

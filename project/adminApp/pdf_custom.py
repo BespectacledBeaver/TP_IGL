@@ -8,7 +8,7 @@ def convert_pdf_to_tei(pdf_path):
 
     # Set up the headers and payload
     headers = {"Content-Type": "multipart/form-data"}
-    files = {'input': (pdf_path, open(pdf_path, 'rb'))}
+    files = {'input': pdf_path}
 
     # Make a POST request to the GROBID API
     response = requests.post(grobid_api_url, files=files)
@@ -77,7 +77,7 @@ def extract_metadata_and_body_from_tei(tei_xml):
 
     return result
 
-
+'''
 # Example usage
 pdf_path = "../Article_04.pdf"
 tei_xml = convert_pdf_to_tei(pdf_path)
@@ -102,3 +102,4 @@ if tei_xml:
 
         body_content = result.get('body')
         print("\nBody Content:\n", body_content)
+'''
