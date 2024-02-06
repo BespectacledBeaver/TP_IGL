@@ -8,7 +8,7 @@ from userManagementApp.models import User , FavoriteArticle
 from articleManagementAPP.serializers import ArticleSerializer
 from django.db.models import Q
 from datetime import datetime
-
+from articleManagementAPP.serializers import ArticleSerializer  
 
 # Create your views here.
 
@@ -41,6 +41,25 @@ class Sentarticlesview(APIView):
     
         
 
+
+
+class Sentdetailsview(APIView):
+    def post(self, request): 
+        article_id = request.data.get("articleid") 
+        if article_id is not None:
+            try:
+                article = Article.objects.get(id=article_id)
+                serializer = ArticleSerializer(article)  # Utilisez le sérialiseur pour convertir l'instance de l'article en données JSON
+                return Response(serializer.data, status=status.HTTP_200_OK)  # Retournez les données JSON dans la réponse HTTP
+            except Article.DoesNotExist:
+                return Response({"error": "Article not found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"error": "Article ID not provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+            
+        
+    
+        
 
 class SearchArticlesView(APIView):
     def post(self, request):
