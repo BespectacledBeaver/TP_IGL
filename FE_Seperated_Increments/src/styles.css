@@ -74,6 +74,10 @@
     --red-900: #7f1d1d;
     --red-950: #450a0a;
 
+    --orange-300:#fdba74;
+    --orange-400:#fb923c;
+    --orange-500:#f97316;
+
     --primary-25: var(--dark-cyan-25);
     --primary-50: var(--dark-cyan-50);
     --primary-100: var(--dark-cyan-100);

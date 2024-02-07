@@ -14,19 +14,24 @@ def my_article_save_handler(sender, instance, created, **kwargs):
             
             if result:
                 metadata = result['metadata']
-                instance.title = metadata.get('title')
-                instance.authors = ", ".join(metadata.get('authors', []))
-                instance.abstract = metadata.get('abstract')
-                instance.keywords = ", ".join(metadata.get('keywords', []))
-                instance.references = "\n".join(metadata.get('references', []))
-                instance.text = result.get('body')
+                articleExists = Article.objects.filter(title=metadata.get('title')).first()
+                if articleExists is None:
+                    if instance.title =='': instance.title = metadata.get('title')
+                    if instance.authors =='': instance.authors = ", ".join(metadata.get('authors', []))
+                    if instance.abstract =='': instance.abstract = metadata.get('abstract')
+                    if instance.keywords =='': instance.keywords = ", ".join(metadata.get('keywords', []))
+                    if instance.references =='': instance.references = "\n".join(metadata.get('references', []))
+                    if instance.text =='': instance.text = result.get('body')
 
-                # Concatenate affiliations into a single string
-                affiliations = metadata.get('affiliations', {})
-                institutions_list = []
-                for key, org_name in affiliations.items():
-                    institutions_list.append(f"{key}: {org_name}")
-                instance.institutions = "\n".join(institutions_list)
+                    # Concatenate affiliations into a single string
+                    if instance.institutions =='':
+                        affiliations = metadata.get('affiliations', {})
+                        institutions_list = []
+                        for key, org_name in affiliations.items():
+                            institutions_list.append(f"{key}: {org_name}")
+                        instance.institutions = "\n".join(institutions_list)
 
-                # Save the updated instance
-                instance.save()
+                    # Save the updated instance
+                    instance.save()
+                else:
+                    instance.delete()

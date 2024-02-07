@@ -1,6 +1,7 @@
 import { Header, Footer } from './CommonFunctions';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import loadingGIF from '../assets/Loading.gif';
 import "./Article.css";
 import "../styles.css";
 
@@ -33,7 +34,6 @@ export default function ArticlePage() {
                 }
                 const data = await response.json();
                 setArticle(data);
-                console.log(data);
             } catch (error) {
                 console.error('Error fetching articles:', error);
             }
@@ -143,7 +143,11 @@ export default function ArticlePage() {
                         <p className="article-heading">References</p>
                         <p className="article-paragraph">{article.references}</p>
                     </div>
-                </>) : (<p>Bruh</p>)}
+                </>) : (<div className="error">
+                    <div className="big loader">
+
+                    </div>
+                </div>)}
         </div>
         <Footer />
     </>

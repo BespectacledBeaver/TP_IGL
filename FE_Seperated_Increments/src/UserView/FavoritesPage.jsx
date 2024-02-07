@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Header, Navigation, Footer } from './CommonFunctions';
 import { Article } from './Article';
+import noResults from '../assets/File_Not_Found.png';
 import "./Articles.css";
 import "../styles.css";
 import { useLocation } from "react-router-dom";
@@ -38,29 +39,6 @@ export default function Favorites() {
                 // Handle errors
                 console.error('Error:', error);
             });
-        /*
-          async function fetchFavoritedArticles() {
-              try {
-                  const response = await fetch('http://127.0.0.1:8000/ConsulterFav' , {
-                      method: 'POST',
-                      headers: {
-                          'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                          userid: userid,
-                      }),
-                  });
-                  if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                  }
-                  const data = await response.json();
-                  /*setFavoritedArticles(data);
-                  console.log(data);
-              } catch (error) {
-                  console.error('Error fetching articles:', error);
-              }
-          }
-          fetchFavoritedArticles();*/
     }, []);
 
     return <>
@@ -68,9 +46,9 @@ export default function Favorites() {
         <div className="main">
             <p className="favorites-title">Favorites</p>
             <div className="articles-list">
-                {favorites.map(favorite => {
+                {favorites.message? (<div className="error"><img src={noResults} alt="" /><p>{favorites.message}</p></div>):(favorites.map(favorite => {
                     return <Article key={favorite.id} id={favorite.id} title={favorite.title} authors={favorite.authors} date={favorite.publication_date} favorited='True'/>
-                })}
+                }))}
             </div>
             {/*<Navigation currentNavPage={currentNavPage} maxNavPages={5} goback={goBack} goforward={goForward}/>*/}
         </div>

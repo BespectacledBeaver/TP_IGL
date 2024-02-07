@@ -76,9 +76,10 @@ class SearchArticlesView(APIView):
 
             # Initialize an empty queryset
             filter_conditions = Q()
-
             if search_options == 'title':
                 filter_conditions |= Q(title__icontains=keywords)
+            if search_options == 'text':
+                filter_conditions |= Q(text__icontains=keywords)
             elif search_options == 'authors':
                 filter_conditions |= Q(authors__icontains=keywords)
             elif search_options == 'keywords':
@@ -98,18 +99,21 @@ class SearchArticlesView(APIView):
         
             articles = []
             filtered_results = Article.objects.filter(filter_conditions)
-            all_articles = filtered_results.all().values('id','title', 'publication_date', 'authors')
-            for article_data in all_articles:
-                article_id = article_data['id']
-                is_favorite = FavoriteArticle.objects.filter(user=user, article_id=article_id).exists()
-                article_data['is_favorite'] = is_favorite
-                articles.append(article_data)
+            if filtered_results.exists():
+                all_articles = filtered_results.all().values('id','title', 'publication_date', 'authors')
+                for article_data in all_articles:
+                    article_id = article_data['id']
+                    is_favorite = FavoriteArticle.objects.filter(user=user, article_id=article_id).exists()
+                    article_data['is_favorite'] = is_favorite
+                    articles.append(article_data)
 
-            # Trier les articles par date de publication
-            articles = sorted(articles, key=lambda x: x['publication_date'], reverse=True)
-            list_articles =  list(articles)
-        
-            return Response(list_articles)
+                # Trier les articles par date de publication
+                articles = sorted(articles, key=lambda x: x['publication_date'], reverse=True)
+                list_articles =  list(articles)
+
+                return Response(list_articles)
+            else:
+                return Response({"message": "No Articles Found"}, status=404)
         else:
             return Response("Missing user id ", status=status.HTTP_400_BAD_REQUEST)
         

@@ -10,7 +10,7 @@
     aspect-ratio: 1;
     border-radius: 100vw;
     background-color: var(--primary-500);
-    
+
     display: grid;
     place-content: center;
 }
@@ -24,7 +24,7 @@
 
 .main:has(.article-content) {
     position: relative;
-    background: linear-gradient(to bottom, #D3DCE4 calc(4*var(--fs-600)), white calc(10*var(--fs-600)) calc(100% - 10*var(--fs-600)) ,#D3DCE4 100%);
+    background: linear-gradient(to bottom, #D3DCE4 calc(4*var(--fs-600)), white calc(10*var(--fs-600)) calc(100% - 10*var(--fs-600)), #D3DCE4 100%);
 }
 
 body:has(.article-content) {
@@ -37,7 +37,7 @@ body:has(.article-content) {
     color: var(--grey-500);
     font-size: var(--fs-600);
     font-weight: 500;
-    
+
 }
 
 .article-header>p {
@@ -73,6 +73,7 @@ body:has(.article-content) {
 .article-header .bookmark__container {
     margin-right: calc(5px + var(--fs-900));
 }
+
 .article-header .openpdf__container {
     margin-inline: calc(var(--fs-900)/2);
 }
@@ -96,7 +97,9 @@ body:has(.article-content) {
 
 
 @keyframes back-to-normal {
-    to {scale: 1 1;}
+    to {
+        scale: 1 1;
+    }
 }
 
 .article-header .bookmark-input:checked~.bookmark__container .to-bookmark,
@@ -108,7 +111,7 @@ body:has(.article-content) {
 .article-header .bookmark:hover .to-bookmark,
 .article-header .bookmark:hover .bookmarked {
     fill: var(--primary-700);
-    
+
     scale: 1.015 0.985;
     animation: none;
     transition: fill 200ms ease-in, scale 500ms ease-in;
@@ -120,6 +123,12 @@ body:has(.article-content) {
     margin-left: 2rem;
 
     text-wrap: pretty;
+    -webkit-user-select: text !important;
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
 }
 
 .article-content *::selection {
@@ -153,7 +162,7 @@ body:has(.article-content) {
     text-align: center;
 }
 
-.main:has(.article-content) ~ footer {
+.main:has(.article-content)~footer {
     background-color: #D3DCE4;
     color: var(--grey-500) !important;
     margin-top: 0;

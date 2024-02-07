@@ -5,7 +5,6 @@ import datetime
 # Create your models here.
 
 class Article(models.Model):
-
     title = models.CharField(blank=True)
     publication_date = models.DateField(default=datetime.date.today)
     authors = models.CharField(blank=True)  

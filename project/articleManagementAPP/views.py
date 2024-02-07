@@ -12,8 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
-
-
 class ArticlePDFview(APIView):
     @csrf_exempt
     def post(self , request): 

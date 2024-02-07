@@ -1,4 +1,5 @@
-#root:has(.search-bar), #root:has(.favorites-title) {
+#root:has(.search-bar),
+#root:has(.favorites-title) {
     --gradient-threshold: 15%;
     background: linear-gradient(#F1F3F5 var(--gradient-threshold), var(--primary-500));
 
@@ -12,7 +13,8 @@
     height: 50px;
     aspect-ratio: 1;
     border-radius: 100vw;
-    background-color: var(--primary-500);/*
+    background-color: var(--primary-500);
+    /*
     text-align: center;
     font-size: var(--fs-900);
     line-height: calc(1.5*var(--fs-900));
@@ -32,7 +34,8 @@
     fill: var(--white-500);
 }
 
-.main:has(.search-bar), .main:has(.favorites-title) {
+.main:has(.search-bar),
+.main:has(.favorites-title) {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -73,7 +76,7 @@
     transition: background-image 550ms ease-out;
 }
 
-.search-bar > input[type="text"] {
+.search-bar>input[type="text"] {
     outline: none;
     box-sizing: border-box;
     font-weight: 500;
@@ -87,7 +90,7 @@
     border: none;
 }
 
-.search-bar > input[type="text"]:focus-visible {
+.search-bar>input[type="text"]:focus-visible {
     background-color: transparent;
     outline: none;
 }
@@ -433,7 +436,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 @keyframes back-to-normal {
-    to {scale: 1 1;}
+    to {
+        scale: 1 1;
+    }
 }
 
 .article .bookmark-input:checked~.bookmark__container .to-bookmark,
@@ -537,6 +542,68 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: var(--white-500);
     fill: var(--primary-500);
     transition: background-color 450ms ease-in, fill 450ms ease-in;
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.error img {
+    height: 30vw;
+}
+
+.error p {
+    margin-top: 0;
+    color: var(--orange-400);
+    font-size: var(--fs-500);
+    font-weight: 700;
+}
+
+.error:has(.big) {
+    height: calc(100dvh - 80px);
+}
+
+.loader {
+    border: 16px solid #D3DCE4;
+    border-radius: 50%;
+    border-top: 16px solid var(--primary-500);
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+.additional-margin {
+    margin-block: var(--fs-900);
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.articles-list:has(.error) {
+    outline-color: var(--orange-300);
 }
 
 /* FAVORITES PAGE */

@@ -76,18 +76,20 @@ class ConsulterFavView(APIView):
                 return Response({"message": "L'utilisateur n'existe pas."}, status=status.HTTP_404_NOT_FOUND)
 
             favorite_articles = FavoriteArticle.objects.filter(user=user)
-            
-            articles_data = []
-            for fav_article in favorite_articles:
-                article_data = {
-                    "id": fav_article.article.id,
-                    "title": fav_article.article.title,
-                    "authors": fav_article.article.authors,
-                    "publication_date": fav_article.article.publication_date,
-                }
-                articles_data.append(article_data)
-                
-            articles_champs = list(articles_data)
-            return Response(articles_champs)
+            if favorite_articles.exists():
+                articles_data = []
+                for fav_article in favorite_articles:
+                    article_data = {
+                        "id": fav_article.article.id,
+                        "title": fav_article.article.title,
+                        "authors": fav_article.article.authors,
+                        "publication_date": fav_article.article.publication_date,
+                    }
+                    articles_data.append(article_data)
+
+                articles_champs = list(articles_data)
+                return Response(articles_champs)
+            else:
+                return Response({"message": "No favorited articles"}, status=404)
         else:
             return Response({"message": "L'identifiant de l'utilisateur est requis."}, status=status.HTTP_400_BAD_REQUEST)
