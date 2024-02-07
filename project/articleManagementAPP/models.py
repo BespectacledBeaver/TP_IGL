@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 import requests
-
+import datetime
 # Create your models here.
 
 class Article(models.Model):
 
     title = models.CharField(blank=True)
-    publication_date = models.DateField(null=True,blank=True)
+    publication_date = models.DateField(default=datetime.date.today)
     authors = models.CharField(blank=True)  
     abstract = models.TextField(blank=True)
     institutions = models.CharField(blank=True)  

@@ -28,7 +28,6 @@ def extract_metadata_and_body_from_tei(tei_xml):
 
     # Parse the TEI XML using BeautifulSoup
     soup = BeautifulSoup(tei_xml, 'xml')
-
     # Extract metadata
     metadata = {}
     title_tag = soup.find('titleStmt').find('title')
@@ -39,8 +38,8 @@ def extract_metadata_and_body_from_tei(tei_xml):
     affiliations = {}
 
     for author_tag in soup.find_all('author'):
-        forename = author_tag.find('forename').text.strip()
-        surname = author_tag.find('surname').text.strip()
+        forename = author_tag.find_next('forename').text.strip()
+        surname = author_tag.find_next('surname').text.strip()
         full_name = f"{forename} {surname}"
         authors.append(full_name)
 

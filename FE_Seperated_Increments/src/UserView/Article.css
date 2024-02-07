@@ -10,14 +10,20 @@
     aspect-ratio: 1;
     border-radius: 100vw;
     background-color: var(--primary-500);
+    
+    display: grid;
+    place-content: center;
+}
+
+.profile>svg {
+    aspect-ratio: 1;
+    height: 30px;
+    translate: 0px -0.5px;
+    fill: var(--white-500);
 }
 
 .main:has(.article-content) {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 1000px;
     background: linear-gradient(to bottom, #D3DCE4 calc(4*var(--fs-600)), white calc(10*var(--fs-600)) calc(100% - 10*var(--fs-600)) ,#D3DCE4 100%);
 }
 
@@ -42,6 +48,7 @@ body:has(.article-content) {
     text-overflow: ellipsis;
 
     margin-left: var(--fs-900);
+    font-weight: 700;
     transition: all 500ms ease-out;
 }
 
@@ -57,7 +64,6 @@ body:has(.article-content) {
 
 .article-header .openpdf__container,
 .article-header .bookmark__container {
-    width: 5vw;
     display: grid;
     place-items: center;
 
@@ -65,7 +71,10 @@ body:has(.article-content) {
 }
 
 .article-header .bookmark__container {
-    margin-right: var(--fs-900);
+    margin-right: calc(5px + var(--fs-900));
+}
+.article-header .openpdf__container {
+    margin-inline: calc(var(--fs-900)/2);
 }
 
 .article-header .openpdf,
@@ -119,7 +128,7 @@ body:has(.article-content) {
 }
 
 .article-content .article-title {
-    margin-inline: auto;
+    text-align: center;
     margin-block: 3rem;
     font-size: var(--fs-500);
     font-weight: 700;
@@ -132,7 +141,7 @@ body:has(.article-content) {
 }
 
 .article-paragraph {
-    max-width: 85ch;
+    max-width: 100ch;
     font-family: 'Times New Roman', Times, serif;
 }
 
@@ -141,7 +150,7 @@ body:has(.article-content) {
 }
 
 .centered {
-    margin-inline: auto;
+    text-align: center;
 }
 
 .main:has(.article-content) ~ footer {

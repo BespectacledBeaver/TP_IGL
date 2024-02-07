@@ -6,16 +6,19 @@ import "../styles.css";
 import { useLocation } from "react-router-dom";
 
 export default function Favorites() {
+    window.scrollTo(0, 0);
+
     let location = useLocation();
     let urlParts = location.pathname.split('/');
     let useridbruh = urlParts[1];
 
     const [favorites, setFavoritedArticles] = useState([]);
+    /*
     const [currentNavPage, setCurrentNavPage] = useState(1);
 
     const goBack = () => { setCurrentNavPage(currentNavPage - 1) };
     const goForward = () => { setCurrentNavPage(currentNavPage + 1) };
-
+    */
     useEffect(() => {
         console.log(useridbruh);
         fetch('http://127.0.0.1:8000/ConsulterFav', {

@@ -205,32 +205,97 @@
 
 .article-modification {
     display: flex;
-    justify-content: center;
-    margin-top: calc(40px + 2rem + 2rem);
+    flex-direction: column;
+    row-gap: var(--fs-500);
+    align-items: start;
+    margin-block: calc(40px + 2rem + 2rem);
+    padding-inline: calc(2.5*var(--fs-900));
 }
 
-.textarea {
+.article-modification .input-wrapper {
+    display: grid;
+    grid-template-columns: calc(4.25*var(--fs-900)) 1fr;
+    width: 100%;
+}
+
+.input-wrapper:has(input[type="date"]){
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+
+.article-modification p {
+    margin-block: 0;
+    margin-right: 1rem;
+
+    font-size: var(--fs-400);
+    font-weight: 600;
+}
+
+.input-wrapper textarea {
+    resize: none;
+    font-size: var(--fs-400);
+    background-color: #fff;
+    font-family: var(--ff-general);
+    font-size: 100%;
+    font: var(--fs-400) var(--ff-general);
+    border: none;
+    outline: 2px solid rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 0 10px;
+    margin: 0;
+    overflow: auto;
+}
+
+.tall textarea{
+    height: 100px;
+}
+
+.taller textarea {
+    height: 250px;
+}
+
+.input-wrapper input[type="date"] {
+    color: var(--grey-200);
+    height: 100%;
+    font-family: var(--ff-title);
+    font-size: var(--fs-200);
+    font-weight: 500;
+
+    padding-left: 0.5rem;
+    border: none;
+    outline: 2px solid rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 0 10px;
+    margin: 0;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    fill: var(--white-500);
+}
+
+.article-modification> textarea {
     background-color: #fff;
     resize: none;
     font-family: var(--ff-general);
     font-size: 100%;
-    font: 1.4em/1.5em var(--ff-general);
+    font: var(--fs-400)/1.5em var(--ff-general);
     border: none;
-    outline: 2px solid rgba(0, 0, 0, 0.1);
+    outline: 2px solid rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     padding: 0 10px;
     margin: 0;
-    width: calc(100% - 4rem);
+    width: 100%;
     min-height: 500px;
     max-height: 200dvh;
-    overflow: auto;
 }
 
-.textarea:focus {
+textarea:focus {
     outline: 2px solid var(--primary-500);
 }
 
-.textarea::selection {
+textarea::selection {
     background: #2a6ccc;
     color: #fff;
 }

@@ -12,7 +12,24 @@
     height: 50px;
     aspect-ratio: 1;
     border-radius: 100vw;
-    background-color: var(--primary-500);
+    background-color: var(--primary-500);/*
+    text-align: center;
+    font-size: var(--fs-900);
+    line-height: calc(1.5*var(--fs-900));
+    font-family: var(--ff-title);
+    font-weight: 500;
+    color: var(--white-500);
+    text-decoration: none;*/
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+
+.profile>svg {
+    aspect-ratio: 1;
+    height: 30px;
+    translate: 0px -0.5px;
+    fill: var(--white-500);
 }
 
 .main:has(.search-bar), .main:has(.favorites-title) {
@@ -221,7 +238,7 @@
     padding-left: 0.5rem;
 }
 
-::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
     fill: var(--white-500);
 }
@@ -288,7 +305,7 @@
     margin-block: 0;
 }
 
-.article-title {
+.article-info .article-title {
     margin-top: 1rem !important;
     color: var(--grey-500);
     font-size: var(--fs-600);

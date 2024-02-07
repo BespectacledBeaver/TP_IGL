@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     element: <ModMenu />,
   },
   {
-    path: "/temp(admin)",
+    path: "/admin",
     element: <AdminLogIn />,
   },
 

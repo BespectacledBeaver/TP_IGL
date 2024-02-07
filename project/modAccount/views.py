@@ -53,8 +53,6 @@ class Loginview(APIView):
             response.set_cookie("SESSION", value=token)
         
         return response
-    
-    
 
 
 class SentarticlesModview(APIView):
@@ -79,4 +77,35 @@ class deleteArticleview(APIView):
             else:
                 return Response({"message": "L'article avec l'ID spécifié n'existe pas."}, status=404)
         else:
-            return Response({"message": "Les identifiants d'article et de modérateur sont requis."}, status=400)
+            return Response({"message": "Les identifiants d'article est requis."}, status=400)
+
+
+class SaveArticleview(APIView):
+    def post(self, request):
+        article_id = request.data.get("id")
+        article_title = request.data.get("title")
+        article_publication_date = request.data.get("publication_date")
+        article_authors = request.data.get("authors")
+        article_abstract = request.data.get("abstract")
+        article_institutions = request.data.get("institutions")
+        article_keywords = request.data.get("keywords")
+        article_text = request.data.get("text")
+        article_references = request.data.get("references")
+
+        if article_id is not None:
+            article = Article.objects.get(id=article_id)
+            if article:
+                article.title = article_title
+                article.publication_date = article_publication_date
+                article.authors =article_authors
+                article.abstract =article_abstract
+                article.institutions =article_institutions
+                article.keywords =article_keywords
+                article.text =article_text
+                article.references =article_references
+                article.save()
+                return Response({"message": "L'article a été modifié avec succès."}, status=200)
+            else:
+                return Response({"message": "L'article avec l'ID spécifié n'existe pas."}, status=404)
+        else:
+            return Response({"message": "Les identifiants d'article est requis."}, status=400)

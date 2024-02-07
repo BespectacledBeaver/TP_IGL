@@ -1,41 +1,97 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "../styles.css";
 import "./Moderation.css";
 
 export default function ModMenu() {
+    window.scrollTo(0, 0);
+
+    const [article, setArticle] = useState({
+        id: null,
+        title: '', publication_date: '', authors: '',
+        abstract: '', institutions: '', keywords: '',
+        text: '', references: ''
+    });
     const [articles, setArticles] = useState([]);
-    const [articleToModify, setArticleToModify] = useState('');
     const [articleListView, setArticleListView] = useState(true);
 
-    const chosenArticle = event => {
-        console.log(event.currentTarget.id);
-        setArticleToModify(event.currentTarget.id);
-        console.log(articleToModify);
+    const chosenArticle = async (event) => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/ArticleDetails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    articleid: event.currentTarget.id,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setArticle(data);
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        }
+
         setArticleListView(false);
     }
 
     const deleteArticle = () => {
-        fetch('http://127.0.0.1:8000/DeleteArticleMod', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        article_id : articleToModify,
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => console.error('Error:', error));
-      window.location.reload(false);
-      setArticleListView(true);
-      setArticleToModify('');
+            fetch('http://127.0.0.1:8000/DeleteArticleMod', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    article_id: article.id,
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => console.error('Error:', error));/*
+            window.location.reload(false);
+            let location = useLocation();
+            window.location.href = location.pathname;
+            setArticleListView(true);
+            setArticle((prevArticle) => {
+                return { ...prevArticle, id: null };
+            });*/
     }
 
     const saveArticle = () => {
-
+        fetch('http://127.0.0.1:8000/SaveArticle', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: article.id,
+                title: article.title,
+                publication_date: article.publication_date,
+                authors: article.authors,
+                abstract: article.abstract,
+                institutions: article.institutions,
+                keywords: article.keywords,
+                text: article.text,
+                references: article.references
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => console.error('Error:', error));
+        window.location.reload(false);
+        let location = useLocation();
+        window.location.href = location.pathname;
+        setArticleListView(true);
+        setArticle((prevArticle) => {
+            return { ...prevArticle, id: null };
+        });
     }
 
     useEffect(() => {
@@ -54,9 +110,58 @@ export default function ModMenu() {
         fetchArticles();
     }, []);
 
+
+    const updateTitle = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, title: event.target.value };
+        });
+    };
+
+    const updateDate = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, publication_date: event.target.value };
+        });
+    };
+
+    const updateAuthors = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, authors: event.target.value };
+        });
+    };
+
+    const updateAbstract = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, abstract: event.target.value };
+        });
+    };
+
+    const updateInstitutions = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, institutions: event.target.value };
+        });
+    };
+
+    const updateKeywords = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, keywords: event.target.value };
+        });
+    };
+
+    const updateText = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, text: event.target.value };
+        });
+    };
+
+    const updateReferences = (event) => {
+        setArticle((prevArticle) => {
+            return { ...prevArticle, references: event.target.value };
+        });
+    };
+
     return <>
         <input className="mod-tab__input" type="radio" name="ModTabs" id="list-tab" defaultChecked />
-        <input className="mod-tab__input" type="radio" name="ModTabs" id="text-tab" onChange={e=> setArticleListView(!articleListView)} checked={!articleListView}/>
+        <input className="mod-tab__input" type="radio" name="ModTabs" id="text-tab" onChange={e => setArticleListView(!articleListView)} checked={!articleListView} />
         <div className="main">
             <div className="articles-list-tab">
                 <label className="text-tab-label" htmlFor="text-tab">
@@ -94,31 +199,15 @@ export default function ModMenu() {
                         </button>
                     </div>
                     <div className="article-modification">
-                        <div className="textarea" role="textbox" aria-multiline="true" /*contentEditable="true"*/ >
-                            #&lt;p className="article-title"#&gt;<br></br>A pilot study using a machine-learning approach of morphological and hemodynamic parameters for predicting aneurysms enhancement#&lt;/p#&gt;<br></br>
-                            #&lt;p className="bold centered"#&gt;<br></br>Nan Lv1 · Christof Karmonik2 · Zhaoyue Shi2 · Shiyue Chen3 · Xinrui Wang3 · Jianmin Liu1 · Qinghai Huang1#&lt;/p#&gt;<br></br>
-                            #&lt;p className="article-paragraph"#&gt;<br></br>Received: 16 December 2019 / Accepted: 18 May 2020
-                            © CARS 2020
-                            #&lt;/p#&gt;<br></br>
-                            #&lt;p className="article-heading"#&gt;<br></br>Abstract#&lt;/p#&gt;<br></br>
-                            #&lt;p className="article-paragraph"#&gt;<br></br>
-                            Purpose The development of straightforward classification methods is needed to identify unstable aneurysms and rupture
-                            risk for clinical use. In this study, we aim to investigate the relative importance of geometrical, hemodynamic and clinical risk
-                            factors represented by the PHASES score for predicting aneurysm wall enhancement using several machine-learning (ML)
-                            models.
-                            Methods Nine different ML models were applied to 65 aneurysm cases with 24 predictor variables. ML models were
-                            optimized with the training set using tenfold cross-validation with five repeats with the area under the curve (AUC) as cost
-                            parameter. Models were validated using the test set. Accuracy being significantly higher (p 0.05) than the non-information
-                            rate (NIR) was used as measure of performance. The relative importance of the predictor variables was determined from a
-                            subset of five ML models in which this information was available.
-                            Results Best-performing ML model was based on gradient boosting (AUC 0.98). Second best-performing model was based
-                            on generalized linear modeling (AUC 0.80). The size ratio was determined as the dominant predictor for wall enhancement
-                            followed by the PHASES score and mean wall shear stress value at the aneurysm wall. Four ML models exhibited a statistically
-                            significant higher accuracy (0.79) than the NIR (0.58): random forests, generalized linear modeling, gradient boosting and
-                            linear discriminant analysis.
-                            Conclusions ML models are capable of predicting the relative importance of geometrical, hemodynamic and clinical parameters for aneurysm wall enhancement. Size ratio, PHASES score and mean wall shear stress value at the aneurysm wall are
-                            of highest importance when predicting wall enhancement in cerebral aneurysms#&lt;/p#&gt;<br></br>
-                        </div>
+                        <div className="input-wrapper"><p>Title :</p><textarea value={article.title} onChange={e => updateTitle(e)} /></div>
+                        <div className="input-wrapper"><p>Publishing Date :</p><input type="date" value={article.publication_date} onChange={e => updateDate(e)} /></div>
+                        <div className="input-wrapper"><p>Authors :</p><textarea value={article.authors} onChange={e => updateAuthors(e)} /></div>
+                        <div className="input-wrapper tall"><p>Abstract :</p><textarea value={article.abstract} onChange={e => updateAbstract(e)} /></div>
+                        <div className="input-wrapper"><p>Institutions :</p><textarea value={article.institutions} onChange={e => updateInstitutions(e)} /></div>
+                        <div className="input-wrapper"><p>Keywords :</p><textarea value={article.keywords} onChange={e => updateKeywords(e)} /></div>
+                        <p>Article's Body :</p>
+                        <textarea value={article.text} onChange={e => updateText(e)} />
+                        <div className="input-wrapper taller"><p>References :</p><textarea role="textbox" value={article.references} onChange={e => updateReferences(e)} /></div>
                     </div>
                 </forum>
             </div>

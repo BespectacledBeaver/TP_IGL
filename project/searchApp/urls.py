@@ -6,4 +6,5 @@ from .views import *
 urlpatterns = [
     path('Sentarticles',Sentarticlesview.as_view()),
     path('Searcharticles',SearchArticlesView.as_view()),
+    path('ArticleDetails',Sentdetailsview.as_view()),
 ]
