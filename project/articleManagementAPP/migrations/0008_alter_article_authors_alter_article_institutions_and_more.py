@@ -13,21 +13,21 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='article',
             name='authors',
-            field=models.CharField(blank=True),
+            field=models.CharField(max_length=500, blank=True),
         ),
         migrations.AlterField(
             model_name='article',
             name='institutions',
-            field=models.CharField(blank=True),
+            field=models.CharField(max_length=500, blank=True),
         ),
         migrations.AlterField(
             model_name='article',
             name='keywords',
-            field=models.CharField(blank=True),
+            field=models.CharField(max_length=500, blank=True),
         ),
         migrations.AlterField(
             model_name='article',
             name='title',
-            field=models.CharField(blank=True),
+            field=models.CharField(max_length=500, blank=True),
         ),
     ]

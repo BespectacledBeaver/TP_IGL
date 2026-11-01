@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
+import socket
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -85,16 +87,35 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'project',
-        'USER':'postgres',
-        'PASSWORD':'tpigl6mhdi',
-        'HOST':'localhost',
-        'PORT':'5432',
+def is_postgres_available(host, port):
+    try:
+        with socket.create_connection((host, int(port)), timeout=1):
+            return True
+    except OSError:
+        return False
+
+PG_HOST = os.environ.get('DB_HOST', 'localhost')
+PG_PORT = os.environ.get('DB_PORT', '5432')
+USE_SQLITE = os.environ.get('USE_SQLITE', '').lower() in ('1', 'true') or not is_postgres_available(PG_HOST, PG_PORT)
+
+if USE_SQLITE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME', 'project'),
+            'USER': os.environ.get('DB_USER', 'postgres'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', 'tpigl6mhdi'),
+            'HOST': PG_HOST,
+            'PORT': PG_PORT,
+        }
+    }
 
 
 # Password validation

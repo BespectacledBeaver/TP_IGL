@@ -5,12 +5,12 @@ import datetime
 # Create your models here.
 
 class Article(models.Model):
-    title = models.CharField(blank=True)
+    title = models.CharField(max_length=500, blank=True)
     publication_date = models.DateField(default=datetime.date.today)
-    authors = models.CharField(blank=True)  
+    authors = models.CharField(max_length=500, blank=True)  
     abstract = models.TextField(blank=True)
-    institutions = models.CharField(blank=True)  
-    keywords = models.CharField(blank=True)  
+    institutions = models.CharField(max_length=500, blank=True)  
+    keywords = models.CharField(max_length=500, blank=True)  
     text = models.TextField(null=True,blank=True)  
     pdf_url = models.FileField(blank=True)
     references = models.TextField(blank=True)  
